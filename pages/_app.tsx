@@ -6,6 +6,16 @@ import { theme } from "../utils/ui/theme";
 // This is the chainId your dApp will work on.
 const activeChainId = ChainId.Mumbai;
 
+// auth
+// authConfig={{
+//   authUrl: "/api/auth",
+//   domain: "example.org",
+//   loginRedirect: "/",
+// }}
+// We can also use the useUser hook to get the currently authenticated user:
+//  import { ConnectWallet, useUser } from "@thirdweb-dev/react";
+//  const { user } = useUser();
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider desiredChainId={activeChainId}>

@@ -19,7 +19,7 @@ const Card = ({ status, imgUrl, title }) => {
     return (
       <Flex w="full" justify={"space-between"} p="2" align={"center"}>
         <Badge size={["xs", "sm"]}>ONSALE</Badge>
-        <Text size={["xs", "sm"]}>3188 piece solded</Text>
+        <Text size={["xs", "sm"]}>3188 piece sold</Text>
       </Flex>
     );
   };
