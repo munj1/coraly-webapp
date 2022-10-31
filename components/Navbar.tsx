@@ -20,6 +20,7 @@ import { BsWallet2 } from "react-icons/bs";
 import { useRef } from "react";
 import { ConnectWallet } from "@thirdweb-dev/react";
 import Wallet from "./Wallet";
+import { useRouter } from "next/router";
 
 import { useAddress, useDisconnect } from "@thirdweb-dev/react";
 
@@ -28,6 +29,7 @@ const Navbar = () => {
   const btnRef = useRef();
   const address = useAddress();
   const disconnect = useDisconnect();
+  const router = useRouter();
 
   return (
     <Flex
@@ -37,7 +39,7 @@ const Navbar = () => {
       p="3"
       bg="blackAlpha.200"
     >
-      <Box p="2">
+      <Box p="2" onClick={() => router.push("/")} cursor={"pointer"}>
         <Heading size="md">Coraly</Heading>
       </Box>
       <Spacer />
