@@ -18,8 +18,8 @@ const Card = ({ status, imgUrl, title }) => {
   const renderStatus = () => {
     return (
       <Flex w="full" justify={"space-between"} p="2" align={"center"}>
-        <Badge size="sm">onSale</Badge>
-        <Text size="sm">3188 piece solded</Text>
+        <Badge size={["xs", "sm"]}>ONSALE</Badge>
+        <Text size={["xs", "sm"]}>3188 piece solded</Text>
       </Flex>
     );
   };
@@ -28,12 +28,12 @@ const Card = ({ status, imgUrl, title }) => {
     <Box
       border={"2px"}
       borderColor="blackAlpha.600"
-      height="80"
+      height={[200, 300, 400]}
       cursor={"pointer"}
       rounded={"md"}
       onClick={() => router.push("/detail")}
     >
-      <Flex h="52">
+      <Flex height={"70%"}>
         <Image src={imgUrl} alt={title} objectFit={"cover"} w="full" />
       </Flex>
       <VStack>{renderStatus()}</VStack>

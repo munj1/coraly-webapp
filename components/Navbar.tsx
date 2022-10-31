@@ -17,8 +17,8 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { BsWallet2 } from "react-icons/bs";
+import { AiOutlineUser } from "react-icons/ai";
 import { useRef } from "react";
-import { ConnectWallet } from "@thirdweb-dev/react";
 import Wallet from "./Wallet";
 import { useRouter } from "next/router";
 
@@ -44,6 +44,11 @@ const Navbar = () => {
       </Box>
       <Spacer />
       <ButtonGroup gap="2">
+        <IconButton
+          aria-label="User"
+          icon={<AiOutlineUser />}
+          onClick={() => router.push("/profile")}
+        />
         <IconButton
           aria-label="Connect Wallet"
           icon={<BsWallet2 />}
