@@ -15,10 +15,12 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Center,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { BsWallet2 } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Wallet from "./Wallet";
 import { useRouter } from "next/router";
 
@@ -30,6 +32,14 @@ const Navbar = () => {
   const address = useAddress();
   const disconnect = useDisconnect();
   const router = useRouter();
+  const [shortenedAddress, setShortenedAddress] = useState("");
+  // shorten address
+
+  useEffect(() => {
+    if (address) {
+      setShortenedAddress(address.slice(0, 6) + "..." + address.slice(-4));
+    }
+  }, [address]);
 
   return (
     <Flex
@@ -75,10 +85,15 @@ const Navbar = () => {
           </DrawerBody>
 
           <DrawerFooter>
-            {address && (
-              <Button variant="outline" mr={3} onClick={disconnect}>
-                Disconnect
-              </Button>
+            {shortenedAddress && (
+              <VStack w="full" alignItems={"flex-end"}>
+                <Text size="xs" textAlign={"right"}>
+                  Connected to : {shortenedAddress}
+                </Text>
+                <Button variant="outline" mr={3} onClick={disconnect}>
+                  Disconnect
+                </Button>
+              </VStack>
             )}
           </DrawerFooter>
         </DrawerContent>

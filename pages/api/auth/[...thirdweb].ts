@@ -1,3 +1,5 @@
-import { ThirdwebAuthHandler } from "../../../auth.config";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default ThirdwebAuthHandler();
+export default (req: NextApiRequest, res: NextApiResponse) => {
+  req.statusCode = 200;
+};

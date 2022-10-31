@@ -1,5 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 .env
+coraly-dapp-firebase-adminsdk-6t7dm-1ecb722241.json
 
 # dependencies
 /node_modules

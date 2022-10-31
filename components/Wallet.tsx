@@ -39,6 +39,7 @@ const Wallet = () => {
   const [usdtBalance, setUsdtBalance] = useState({ balance: "", usd: "" });
   const [totalBalance, setTotalBalance] = useState("");
   const sdk = useSDK();
+  const [shortenedAddress, setShortenedAddress] = useState("");
 
   const { contract: usdtContract } = useContract(USDT_ADDRESS);
   const {
@@ -90,6 +91,8 @@ const Wallet = () => {
     if (isLoadingUsdt) return;
     if (isErrorUsdt) return;
     getBalances();
+    setShortenedAddress(address.slice(0, 6) + "..." + address.slice(-4));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, usdt, isLoadingUsdt, isErrorUsdt]);
 
