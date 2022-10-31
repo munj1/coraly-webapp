@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import Faucet from "../components/Faucet";
 import Sales from "../components/grid/Sales";
 import Navbar from "../components/Navbar";
 
@@ -8,6 +9,7 @@ const Home: NextPage = () => {
     <Box w={"full"}>
       <Navbar />
       <Sales />
+      <Faucet />
     </Box>
   );
 };

@@ -10,6 +10,7 @@ import {
   Spacer,
   Spinner,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import {
@@ -27,8 +28,12 @@ import {
 import { useEffect, useState } from "react";
 import { getPricesFromBinance, USDT_ADDRESS } from "../utils/consts";
 import { Matic, Usdc, Usdt, Eth } from "@web3uikit/icons";
+import LogInButton from "./auth/LogInButton";
+import LogOutButton from "./auth/LogOutButton";
+import { Auth } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-const Wallet = () => {
+const Wallet = ({ auth }: { auth: Auth }) => {
   const address = useAddress();
   const isMimatch = useNetworkMismatch();
   const connectWithMetamask = useMetamask();
@@ -39,7 +44,9 @@ const Wallet = () => {
   const [usdtBalance, setUsdtBalance] = useState({ balance: "", usd: "" });
   const [totalBalance, setTotalBalance] = useState("");
   const sdk = useSDK();
-  const [shortenedAddress, setShortenedAddress] = useState("");
+
+  //auth
+  const [user, loading, error] = useAuthState(auth);
 
   const { contract: usdtContract } = useContract(USDT_ADDRESS);
   const {
@@ -48,6 +55,7 @@ const Wallet = () => {
     error: isErrorUsdt,
   } = useTokenBalance(usdtContract, address);
 
+  /** get Balance from user's wallet, fetch data from binance api, calculate price, set price states*/
   const getBalances = async () => {
     const { ethPrice, maticPrice } = await getPricesFromBinance();
 
@@ -70,29 +78,24 @@ const Wallet = () => {
     // USDC - LATER
   };
 
-  const [isMinting, setIsMinting] = useState(false);
-  const mintDummyUsdt = async () => {
-    // send GET request to /api/mint/usdt with address
-    setIsMinting(true);
-
-    try {
-      const res = await fetch(`/api/mint/usdt?address=${address}`);
-      const data = await res.json();
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-      alert("Error minting USDT. Please try again.");
+  // toast
+  const toast = useToast();
+  useEffect(() => {
+    if (address) {
+      toast({
+        title: `Wallet Connected to ${address}`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     }
-    setIsMinting(false);
-  };
+  }, [address]);
 
   useEffect(() => {
     if (!address) return;
     if (isLoadingUsdt) return;
     if (isErrorUsdt) return;
     getBalances();
-    setShortenedAddress(address.slice(0, 6) + "..." + address.slice(-4));
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, usdt, isLoadingUsdt, isErrorUsdt]);
 
@@ -214,9 +217,10 @@ const Wallet = () => {
           <Text textAlign={"left"}>0 $</Text>
         </VStack>
       </HStack>
-      <Button size="xs" onClick={mintDummyUsdt} disabled={isMinting}>
-        Claim test USDT (made by Hongjun)
-      </Button>
+      {/* if user not logged in, then display login button  */}
+      {!user && <LogInButton />}
+
+      {/* <LogOutButton /> */}
     </VStack>
   );
 };

@@ -1,11 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { Auth, getAuth } from "firebase/auth";
 import { Firestore, getFirestore } from "firebase/firestore";
+import { getStorage, FirebaseStorage } from "firebase/storage";
 
 // Create Client-Side Instance of Firebase
 export default function initializeFirebaseClient(): {
   db: Firestore;
   auth: Auth;
+  storage: FirebaseStorage;
 } {
   const firebaseApp = initializeApp({
     apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -18,9 +20,11 @@ export default function initializeFirebaseClient(): {
 
   const db = getFirestore(firebaseApp);
   const auth = getAuth(firebaseApp);
+  const storage = getStorage(firebaseApp);
 
   return {
     db,
     auth,
+    storage,
   };
 }

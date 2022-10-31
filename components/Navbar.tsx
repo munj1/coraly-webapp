@@ -23,8 +23,11 @@ import { AiOutlineUser } from "react-icons/ai";
 import { useEffect, useRef, useState } from "react";
 import Wallet from "./Wallet";
 import { useRouter } from "next/router";
-
 import { useAddress, useDisconnect } from "@thirdweb-dev/react";
+import { useContext } from "react";
+import { FirebaseContext } from "../context/FirebaseContext";
+import { useAuthState } from "react-firebase-hooks/auth";
+import LogOutButton from "./auth/LogOutButton";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,13 +36,18 @@ const Navbar = () => {
   const disconnect = useDisconnect();
   const router = useRouter();
   const [shortenedAddress, setShortenedAddress] = useState("");
-  // shorten address
 
   useEffect(() => {
     if (address) {
       setShortenedAddress(address.slice(0, 6) + "..." + address.slice(-4));
     }
+    setShortenedAddress("");
   }, [address]);
+
+  // auth
+  const firebaseCtx = useContext(FirebaseContext);
+  const { auth, db } = firebaseCtx;
+  const [user, loading, error] = useAuthState(auth);
 
   return (
     <Flex
@@ -81,20 +89,20 @@ const Navbar = () => {
           <DrawerHeader>My Wallet</DrawerHeader>
 
           <DrawerBody>
-            <Wallet />
+            <Wallet auth={auth} />
           </DrawerBody>
 
           <DrawerFooter>
-            {shortenedAddress && (
-              <VStack w="full" alignItems={"flex-end"}>
+            <VStack w="full" alignItems={"flex-end"}>
+              {user && <Text>user Logged In</Text>}
+              {shortenedAddress && (
                 <Text size="xs" textAlign={"right"}>
                   Connected to : {shortenedAddress}
                 </Text>
-                <Button variant="outline" mr={3} onClick={disconnect}>
-                  Disconnect
-                </Button>
-              </VStack>
-            )}
+              )}
+              {address && <Button onClick={disconnect}>Disconnect</Button>}
+              {!address && user && <LogOutButton />}
+            </VStack>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

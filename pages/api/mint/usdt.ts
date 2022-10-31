@@ -13,7 +13,7 @@ const mintUsdt = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const sdk = ThirdwebSDK.fromPrivateKey(
-      process.env.DEV_PRIVATE_KEY,
+      process.env.ADMIN_PRIVATE_KEY,
       "mumbai"
     );
     const contract = await sdk.getContract(
