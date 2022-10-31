@@ -40,14 +40,22 @@ const Navbar = () => {
   useEffect(() => {
     if (address) {
       setShortenedAddress(address.slice(0, 6) + "..." + address.slice(-4));
+    } else {
+      setShortenedAddress("");
     }
-    setShortenedAddress("");
   }, [address]);
 
   // auth
   const firebaseCtx = useContext(FirebaseContext);
   const { auth, db } = firebaseCtx;
   const [user, loading, error] = useAuthState(auth);
+  useEffect(() => {
+    if (loading) return;
+    if (error) console.log(error);
+    if (user) {
+      console.log("user", user);
+    }
+  }, [user, error, loading]);
 
   return (
     <Flex
@@ -94,7 +102,9 @@ const Navbar = () => {
 
           <DrawerFooter>
             <VStack w="full" alignItems={"flex-end"}>
-              {user && <Text>user Logged In</Text>}
+              {user && (
+                <Text>Hello! {user?.displayName ?? "anonymous user"}</Text>
+              )}
               {shortenedAddress && (
                 <Text size="xs" textAlign={"right"}>
                   Connected to : {shortenedAddress}

@@ -4,6 +4,7 @@ import { signInWithCustomToken } from "firebase/auth";
 import { Button, useToast } from "@chakra-ui/react";
 import { useContext } from "react";
 import { FirebaseContext } from "../../context/FirebaseContext";
+import { SiEthereum } from "react-icons/si";
 
 const LogInButton = () => {
   const sdk = useSDK();
@@ -62,7 +63,11 @@ const LogInButton = () => {
   }
 
   return (
-    <Button onClick={() => signIn()} colorScheme={"green"}>
+    <Button
+      onClick={() => signIn()}
+      colorScheme={"yellow"}
+      leftIcon={<SiEthereum />}
+    >
       Sign in with Ethereum
     </Button>
   );

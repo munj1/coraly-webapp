@@ -16,9 +16,6 @@ import {
 import {
   useAddress,
   useNetworkMismatch,
-  useMetamask,
-  useWalletConnect,
-  useCoinbaseWallet,
   useNetwork,
   ChainId,
   useSDK,
@@ -32,13 +29,12 @@ import LogInButton from "./auth/LogInButton";
 import LogOutButton from "./auth/LogOutButton";
 import { Auth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import WalletButtons from "./auth/WalletButtons";
 
 const Wallet = ({ auth }: { auth: Auth }) => {
   const address = useAddress();
   const isMimatch = useNetworkMismatch();
-  const connectWithMetamask = useMetamask();
-  const connectWithWalletConnect = useWalletConnect();
-  const connectWithCoinbaseWallet = useCoinbaseWallet();
+
   const [, switchNetwork] = useNetwork();
   const [maticBalance, setMaticBalance] = useState({ balance: "", usd: "" });
   const [usdtBalance, setUsdtBalance] = useState({ balance: "", usd: "" });
@@ -78,19 +74,6 @@ const Wallet = ({ auth }: { auth: Auth }) => {
     // USDC - LATER
   };
 
-  // toast
-  const toast = useToast();
-  useEffect(() => {
-    if (address) {
-      toast({
-        title: `Wallet Connected to ${address}`,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  }, [address]);
-
   useEffect(() => {
     if (!address) return;
     if (isLoadingUsdt) return;
@@ -101,40 +84,10 @@ const Wallet = ({ auth }: { auth: Auth }) => {
 
   if (!address) {
     return (
-      <VStack spacing={"6"}>
-        <Center h="28">
-          <Text fontSize={"xs"} align={"center"}>
-            Connect your wallet to buy NFTs in our platform
-          </Text>
-        </Center>
-        <Flex justify={"space-between"} w="full">
-          <HStack>
-            <Avatar src="/metamask.png" size="xs" />
-            <Heading size="sm">Metamask</Heading>
-          </HStack>
-          <Button size="sm" onClick={connectWithMetamask}>
-            Connect
-          </Button>
-        </Flex>
-        <Flex justify={"space-between"} w="full">
-          <HStack>
-            <Avatar src="/walletconnect.png" size="xs" />
-            <Heading size="sm">Wallet Connect</Heading>
-          </HStack>
-          <Button size="sm" onClick={connectWithWalletConnect}>
-            Connect
-          </Button>
-        </Flex>
-        <Flex justify={"space-between"} w="full">
-          <HStack>
-            <Avatar src="/coinbase.svg" size="xs" />
-            <Heading size="sm">Coinbase Wallet</Heading>
-          </HStack>
-          <Button size="sm" onClick={connectWithCoinbaseWallet}>
-            Connect
-          </Button>
-        </Flex>
-      </VStack>
+      <WalletButtons
+        text={"Connect your wallet to buy NFTs in our platform"}
+        textSize="xs"
+      />
     );
   }
 

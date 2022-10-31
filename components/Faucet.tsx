@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Container, Text } from "@chakra-ui/react";
 import { useAddress } from "@thirdweb-dev/react";
 
 const Faucet = () => {
@@ -23,13 +23,14 @@ const Faucet = () => {
   };
 
   return (
-    <>
+    <Container p="10">
+      <Text>USDT Faucet {!address && "connect wallet first"}</Text>
       {address && (
-        <Button size="xs" onClick={mintDummyUsdt} disabled={isMinting}>
-          Claim TEST USDT
+        <Button onClick={mintDummyUsdt} disabled={isMinting}>
+          MINT FREE USDT FOR TEST
         </Button>
       )}
-    </>
+    </Container>
   );
 };
 
