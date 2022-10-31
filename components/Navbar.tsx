@@ -17,6 +17,7 @@ import {
   Center,
   Text,
   VStack,
+  Avatar,
 } from "@chakra-ui/react";
 import { BsWallet2 } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
@@ -103,7 +104,7 @@ const Navbar = () => {
           <DrawerFooter>
             <VStack w="full" alignItems={"flex-end"}>
               {user && (
-                <Text>Hello! {user?.displayName ?? "anonymous user"}</Text>
+                <Text>Hello! {user?.displayName ?? "unknown user"}</Text>
               )}
               {shortenedAddress && (
                 <Text size="xs" textAlign={"right"}>

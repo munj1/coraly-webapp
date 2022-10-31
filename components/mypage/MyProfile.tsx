@@ -21,12 +21,9 @@ const MyProfile = () => {
 
   return (
     <VStack spacing={2} align="flex-start">
-      {user?.photoURL && (
-        <Avatar src={user?.photoURL} size="xl" borderRadius="full" />
-      )}
-
-      {user?.displayName && <Text>Name: {user?.displayName}</Text>}
-      {user?.uid && <Text>Wallet Address: {user?.uid}</Text>}
+      {user && <Avatar src={user?.photoURL} size="xl" borderRadius="full" />}
+      {user && <Text>Name: {user?.displayName ?? "unknown"}</Text>}
+      {user && <Text>Wallet Address: {user?.uid}</Text>}
       {user?.email && <Text>Email: {user?.email}</Text>}
     </VStack>
   );
