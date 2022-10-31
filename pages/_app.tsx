@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       desiredChainId={activeChainId}
       authConfig={{
         authUrl: "/api/auth",
-        domain: "localhost:3000",
+        domain: "coraly-webapp.vercel.app",
         loginRedirect: "/",
       }}
     >

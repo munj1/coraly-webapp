@@ -2,12 +2,14 @@ import { useToast, Button } from "@chakra-ui/react";
 import { useContext } from "react";
 import { FirebaseContext } from "../../context/FirebaseContext";
 import useSignOut from "../../lib/useSignOut";
+import { useRouter } from "next/router";
 
 const LogOutButton = () => {
   const firebaseCtx = useContext(FirebaseContext);
   const { auth } = firebaseCtx;
   const [signOut, loading, _] = useSignOut(auth);
   const toast = useToast();
+  const router = useRouter();
 
   const handleLogout = async () => {
     try {
@@ -18,6 +20,7 @@ const LogOutButton = () => {
         duration: 3000,
         isClosable: true,
       });
+      router.push("/");
     } catch (error) {
       toast({
         title: "Error",

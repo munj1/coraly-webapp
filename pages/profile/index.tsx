@@ -15,6 +15,8 @@ import { FirebaseContext } from "../../context/FirebaseContext";
 import { useAuthState } from "react-firebase-hooks/auth";
 import WalletButtons from "../../components/auth/WalletButtons";
 import LogInButton from "../../components/auth/LogInButton";
+import MyPageTab from "../../components/mypage/MyPageTab";
+import MyProfile from "../../components/mypage/MyProfile";
 
 const ProfilePage = () => {
   // if wallet is not connected => then connect wallet
@@ -25,7 +27,7 @@ const ProfilePage = () => {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <Flex align={"stretch"} flexDir="column" h={"max-content"}>
+    <Flex align={"stretch"} flexDir="column">
       <Navbar />
       {!address && (
         <Center w="full" p="12">
@@ -40,6 +42,15 @@ const ProfilePage = () => {
           <VStack spacing={"10"}>
             <Heading>Sign In</Heading>
             <LogInButton />
+          </VStack>
+        </Center>
+      )}
+      {address && user && (
+        <Center w="full" p="10">
+          <VStack spacing="6" align={"flex-start"}>
+            <Heading>My Page</Heading>
+            <MyProfile />
+            <MyPageTab />
           </VStack>
         </Center>
       )}

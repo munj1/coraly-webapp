@@ -18,7 +18,7 @@ const LogInButton = () => {
   //     Creates a user in Firestore with the verified user's address
 
   async function signIn() {
-    const payload = await sdk?.auth.login("localhost:3000"); // payload = sign in with ethereum to this webpage
+    const payload = await sdk?.auth.login("coraly-webapp.vercel.app"); // payload = sign in with ethereum to this webpage
 
     // make a request to the api with the payload
     const response = await fetch("/api/auth/login", {
@@ -39,6 +39,7 @@ const LogInButton = () => {
 
         // If this is a new user, we create a new document in the database
         const usersRef = doc(db, "users", user.uid!);
+        console.log(usersRef);
         if (!usersRef) {
           // User now has permission to update their own document outlined in the Firestore rules.
           setDoc(usersRef, { createdAt: serverTimestamp() }, { merge: true });
