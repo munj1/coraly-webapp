@@ -1,5 +1,18 @@
 import { FieldValue } from "firebase/firestore";
 
+interface CoralyERC1155 {
+  id: string;
+  name: string;
+  description: string;
+  image?: string;
+  uri?: string;
+  targetNftAddress?: string;
+  targetNftTokenId?: string;
+  supply?: number; // not in a metadata
+}
+
+interface CoralyERC721 {}
+
 interface SalesType {
   id: string; //erc1155 tokenId
   name: string;
@@ -58,4 +71,4 @@ interface PurchaseType {
   purchasedAt: FieldValue; //timestamp
 }
 
-export type { SalesType, UsersType };
+export type { SalesType, UsersType, CoralyERC1155, CoralyERC721 };

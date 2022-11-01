@@ -22,12 +22,10 @@ const AdminPage = () => {
       <Tabs>
         <TabList>
           <Tab>Role</Tab>
-          <Tab>등록-share</Tab>
-          <Tab>등록-nft</Tab>
-          <Tab>등록-db</Tab>
-          <Tab>목록-share</Tab>
-          <Tab>목록-nft</Tab>
-          <Tab>목록-db</Tab>
+          <Tab>Share 등록</Tab>
+          <Tab>Share 목록</Tab>
+          <Tab>NFT 등록</Tab>
+          <Tab>NFT 목록</Tab>
         </TabList>
 
         <TabPanels>
@@ -40,23 +38,15 @@ const AdminPage = () => {
           </TabPanel>
 
           <TabPanel>
-            <Text>Mint 721</Text>
-          </TabPanel>
-
-          <TabPanel>
-            <Text>db에서 sales 등록</Text>
-          </TabPanel>
-
-          <TabPanel>
             <List1155 />
           </TabPanel>
 
           <TabPanel>
-            <Text>721 List</Text>
+            <Text>Mint 721</Text>
           </TabPanel>
 
           <TabPanel>
-            <Text>db에서 조회</Text>
+            <Text>721 List</Text>
           </TabPanel>
         </TabPanels>
       </Tabs>
