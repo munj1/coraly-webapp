@@ -1,5 +1,10 @@
+import { Box } from "@chakra-ui/react";
+import Navbar from "../../components/navwallet/Navbar";
+
 const CollectionsPage = () => {
-  return <div>Enter</div>;
+  <Box w={"full"}>
+    <Navbar />
+  </Box>;
 };
 
 export default CollectionsPage;
