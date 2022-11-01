@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Button, Container, Text, VStack } from "@chakra-ui/react";
+import { Button, Container, Heading, Text, VStack } from "@chakra-ui/react";
 import { useAddress } from "@thirdweb-dev/react";
+import { useRouter } from "next/router";
 
 const Faucet = () => {
   const [isMinting, setIsMinting] = useState(false);
   const address = useAddress();
+  const router = useRouter();
 
   /** mint dummy Usdt for testing, will be depricated before launch */
   const mintDummyUsdt = async () => {
@@ -25,7 +27,8 @@ const Faucet = () => {
   return (
     <Container p="10">
       <VStack spacing={"3"}>
-        <Text>USDT Faucet {!address && " - connect wallet first"}</Text>
+        <Heading>---TEST---</Heading>
+        <Button onClick={() => router.push("/admin")}>Admin Page</Button>
         {address && (
           <Button onClick={mintDummyUsdt} disabled={isMinting}>
             MINT FREE USDT FOR TEST

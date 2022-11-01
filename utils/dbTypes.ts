@@ -3,8 +3,8 @@ import { FieldValue } from "firebase/firestore";
 interface SalesType {
   id: string; //erc1155 tokenId
   name: string;
-  // erc1155Address: string;
   erc721address?: string;
+  erc721tokenId: string;
   sellerId?: string;
 
   totalAmount?: number;
