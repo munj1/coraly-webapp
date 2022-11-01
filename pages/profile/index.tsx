@@ -8,7 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Navbar from "../../components/navwallet/Navbar";
-import { useAddress } from "@thirdweb-dev/react";
+import { useAddress, useNetworkMismatch } from "@thirdweb-dev/react";
 
 //auth
 import { useContext } from "react";
@@ -18,6 +18,7 @@ import { MyModalContext } from "../../context/MyModalContext";
 import MyPageTab from "../../components/mypage/MyPageTab";
 import MyProfile from "../../components/mypage/MyProfile";
 import LogOutButton from "../../components/auth/LogOutButton";
+import NetworkMismatchCenter from "../../components/auth/NetworkMismatchCenter";
 
 const ProfilePage = () => {
   // if wallet is not connected => then connect wallet
@@ -27,6 +28,9 @@ const ProfilePage = () => {
   const { auth } = firebaseCtx; // if need db, storage , then add them
   const [user, loading, error] = useAuthState(auth);
   const { onOpenModal, setModalStatus } = useContext(MyModalContext);
+  const isMimatch = useNetworkMismatch();
+
+  if (isMimatch) return <NetworkMismatchCenter />;
 
   return (
     <Flex align={"stretch"} flexDir="column">
@@ -46,7 +50,7 @@ const ProfilePage = () => {
       )}
 
       {address && user && (
-        <Center w="full" p="10">
+        <Center w="full" h="full" p="6">
           <VStack spacing="6" align={"flex-start"}>
             <Heading>My Page</Heading>
             <MyProfile />

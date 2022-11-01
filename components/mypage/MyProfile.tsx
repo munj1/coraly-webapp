@@ -19,11 +19,15 @@ const MyProfile = () => {
   if (loading) return <Spinner />;
   if (error) return <Text>Error Loading User Profile</Text>;
 
+  const shortenUid = (uid: string) => {
+    return uid.slice(0, 6) + "..." + uid.slice(-4);
+  };
+
   return (
     <VStack spacing={2} align="flex-start">
       {user && <Avatar src={user?.photoURL} size="xl" borderRadius="full" />}
       {user && <Text>Name: {user?.displayName ?? "unknown"}</Text>}
-      {user && <Text>Wallet Address: {user?.uid}</Text>}
+      {user && <Text>Wallet Address: {shortenUid(user?.uid)}</Text>}
       {user?.email && <Text>Email: {user?.email}</Text>}
     </VStack>
   );

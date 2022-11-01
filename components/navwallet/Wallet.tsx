@@ -1,23 +1,14 @@
 import {
-  Avatar,
-  Box,
-  Button,
   Center,
-  Flex,
   Heading,
   HStack,
-  Skeleton,
-  Spacer,
   Spinner,
   Text,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import {
   useAddress,
   useNetworkMismatch,
-  useNetwork,
-  ChainId,
   useSDK,
   useContract,
   useTokenBalance,
@@ -26,16 +17,15 @@ import { useEffect, useState } from "react";
 import { getPricesFromBinance, USDT_ADDRESS } from "../../utils/consts";
 import { Matic, Usdc, Usdt, Eth } from "@web3uikit/icons";
 import LogInButton from "../auth/LogInButton";
-import LogOutButton from "../auth/LogOutButton";
 import { Auth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import WalletButtons from "../auth/WalletButtons";
+import NetworkMismatch from "../auth/NetworkMismatch";
 
 const Wallet = ({ auth }: { auth: Auth }) => {
   const address = useAddress();
   const isMimatch = useNetworkMismatch();
 
-  const [, switchNetwork] = useNetwork();
   const [maticBalance, setMaticBalance] = useState({ balance: "", usd: "" });
   const [usdtBalance, setUsdtBalance] = useState({ balance: "", usd: "" });
   const [totalBalance, setTotalBalance] = useState("");
@@ -92,20 +82,7 @@ const Wallet = ({ auth }: { auth: Auth }) => {
     );
   }
 
-  if (isMimatch) {
-    return (
-      <Center h="full">
-        <VStack spacing={"8"}>
-          <Text fontSize={"md"} align={"center"}>
-            Please switch to Mumbai Testnet
-          </Text>
-          <Button onClick={() => switchNetwork(ChainId.Mumbai)}>
-            Switch Network
-          </Button>
-        </VStack>
-      </Center>
-    );
-  }
+  if (isMimatch) return <NetworkMismatch />;
 
   return (
     <VStack w="full" spacing={"6"}>

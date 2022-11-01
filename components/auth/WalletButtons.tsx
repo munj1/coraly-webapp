@@ -3,7 +3,6 @@ import { useAddress } from "@thirdweb-dev/react";
 import {
   Avatar,
   Button,
-  Center,
   Flex,
   Heading,
   HStack,
@@ -16,7 +15,9 @@ import {
   useWalletConnect,
   useMetamask,
   useCoinbaseWallet,
+  useNetworkMismatch,
 } from "@thirdweb-dev/react";
+import NetworkMismatch from "./NetworkMismatch";
 
 const WalletButtons = ({
   text,
@@ -32,6 +33,7 @@ const WalletButtons = ({
   const connectWithCoinbaseWallet = useCoinbaseWallet();
   const toast = useToast();
   const address = useAddress();
+  const isMimatch = useNetworkMismatch();
 
   useEffect(() => {
     if (address) {
@@ -42,7 +44,9 @@ const WalletButtons = ({
         isClosable: true,
       });
     }
-  }, [address]);
+  }, [address, toast]);
+
+  if (isMimatch) return <NetworkMismatch />;
 
   return (
     <VStack spacing={"6"}>
