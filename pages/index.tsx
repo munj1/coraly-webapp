@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Faucet from "../components/Faucet";
 import Sales from "../components/grid/Sales";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navwallet/Navbar";
 
 const Home: NextPage = () => {
   return (

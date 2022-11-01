@@ -23,13 +23,13 @@ import {
   useTokenBalance,
 } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
-import { getPricesFromBinance, USDT_ADDRESS } from "../utils/consts";
+import { getPricesFromBinance, USDT_ADDRESS } from "../../utils/consts";
 import { Matic, Usdc, Usdt, Eth } from "@web3uikit/icons";
-import LogInButton from "./auth/LogInButton";
-import LogOutButton from "./auth/LogOutButton";
+import LogInButton from "../auth/LogInButton";
+import LogOutButton from "../auth/LogOutButton";
 import { Auth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import WalletButtons from "./auth/WalletButtons";
+import WalletButtons from "../auth/WalletButtons";
 
 const Wallet = ({ auth }: { auth: Auth }) => {
   const address = useAddress();
@@ -87,6 +87,7 @@ const Wallet = ({ auth }: { auth: Auth }) => {
       <WalletButtons
         text={"Connect your wallet to buy NFTs in our platform"}
         textSize="xs"
+        mt={8}
       />
     );
   }

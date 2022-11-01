@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/navwallet/Navbar";
 
 const DetailPage = () => {
   return (

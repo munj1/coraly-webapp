@@ -10,6 +10,7 @@ import {
   VStack,
   Text,
   useToast,
+  Spacer,
 } from "@chakra-ui/react";
 import {
   useWalletConnect,
@@ -20,9 +21,11 @@ import {
 const WalletButtons = ({
   text,
   textSize,
+  mt,
 }: {
   text: string;
   textSize: string;
+  mt: number;
 }) => {
   const connectWithMetamask = useMetamask();
   const connectWithWalletConnect = useWalletConnect();
@@ -43,11 +46,10 @@ const WalletButtons = ({
 
   return (
     <VStack spacing={"6"}>
-      <Center h="28">
-        <Text fontSize={textSize} align={"center"}>
-          {text}
-        </Text>
-      </Center>
+      <Text fontSize={textSize} align={"center"} mb="5" mt={mt}>
+        {text}
+      </Text>
+      <Spacer />
       <Flex justify={"space-between"} w="full">
         <HStack>
           <Avatar src="/metamask.png" size="xs" />

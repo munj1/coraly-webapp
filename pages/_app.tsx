@@ -3,6 +3,8 @@ import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../utils/ui/theme";
 import FirebaseContextProvider from "../context/FirebaseContext";
+import Modals from "../components/modal/Modals";
+import MyModalContextProvider from "../context/MyModalContext";
 
 // This is the chainId your dApp will work on.
 const activeChainId = ChainId.Mumbai;
@@ -18,9 +20,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       }}
     >
       <FirebaseContextProvider>
-        <ChakraProvider theme={theme}>
-          <Component {...pageProps} />
-        </ChakraProvider>
+        <MyModalContextProvider>
+          <ChakraProvider theme={theme}>
+            <Component {...pageProps} />
+            <Modals />
+          </ChakraProvider>
+        </MyModalContextProvider>
       </FirebaseContextProvider>
     </ThirdwebProvider>
   );

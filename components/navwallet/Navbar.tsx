@@ -21,14 +21,14 @@ import {
 } from "@chakra-ui/react";
 import { BsWallet2 } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import Wallet from "./Wallet";
 import { useRouter } from "next/router";
 import { useAddress, useDisconnect } from "@thirdweb-dev/react";
-import { useContext } from "react";
-import { FirebaseContext } from "../context/FirebaseContext";
+import { FirebaseContext } from "../../context/FirebaseContext";
 import { useAuthState } from "react-firebase-hooks/auth";
-import LogOutButton from "./auth/LogOutButton";
+import LogOutButton from "../auth/LogOutButton";
+import { MyModalContext } from "../../context/MyModalContext";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,6 +38,7 @@ const Navbar = () => {
   const router = useRouter();
   const [shortenedAddress, setShortenedAddress] = useState("");
 
+  // get shortened address
   useEffect(() => {
     if (address) {
       setShortenedAddress(address.slice(0, 6) + "..." + address.slice(-4));
@@ -58,6 +59,18 @@ const Navbar = () => {
     }
   }, [user, error, loading]);
 
+  // handle Click Profile Button
+  const { setModalStatus, onOpenModal } = useContext(MyModalContext);
+
+  const handleClickProfile = () => {
+    if (!address || !user) {
+      setModalStatus("login");
+      onOpenModal();
+    } else {
+      router.push("/profile");
+    }
+  };
+
   return (
     <Flex
       minWidth="max-content"
@@ -74,7 +87,7 @@ const Navbar = () => {
         <IconButton
           aria-label="User"
           icon={<AiOutlineUser />}
-          onClick={() => router.push("/profile")}
+          onClick={handleClickProfile}
         />
         <IconButton
           aria-label="Connect Wallet"
