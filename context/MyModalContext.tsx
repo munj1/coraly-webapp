@@ -1,7 +1,7 @@
 import { useDisclosure } from "@chakra-ui/react";
 import React, { createContext, useState } from "react";
 
-type Modal = "login" | "payment";
+type Modal = "login" | "payment" | "setClaimingCondition";
 
 export const MyModalContext = createContext({
   isOpenModal: false,
