@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Container, Text } from "@chakra-ui/react";
+import { Button, Container, Text, VStack } from "@chakra-ui/react";
 import { useAddress } from "@thirdweb-dev/react";
 
 const Faucet = () => {
@@ -24,12 +24,22 @@ const Faucet = () => {
 
   return (
     <Container p="10">
-      <Text>USDT Faucet {!address && " - connect wallet first"}</Text>
-      {address && (
-        <Button onClick={mintDummyUsdt} disabled={isMinting}>
-          MINT FREE USDT FOR TEST
-        </Button>
-      )}
+      <VStack spacing={"3"}>
+        <Text>USDT Faucet {!address && " - connect wallet first"}</Text>
+        {address && (
+          <Button onClick={mintDummyUsdt} disabled={isMinting}>
+            MINT FREE USDT FOR TEST
+          </Button>
+        )}
+        <Text textAlign={"center"}>
+          Coraly Share Certificate - ERC1155 Contract address:
+          0x9e0D40764763341df8B15647da9D1EDe7040A19c
+        </Text>
+        <Text textAlign={"center"}>
+          Coraly NFT - ERC721 Contract Address:
+          0xd837a8bAADdEc64C4F84bb5321aD1410BcCf8146
+        </Text>
+      </VStack>
     </Container>
   );
 };

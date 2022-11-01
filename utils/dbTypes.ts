@@ -39,6 +39,8 @@ interface UsersType {
 
   myNfts?: { string: number }; // salesId : amount
   myPurchases?: string[];
+
+  isArtist: boolean;
   mySales?: string[];
   totalHolders?: number;
 }

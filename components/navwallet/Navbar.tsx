@@ -29,6 +29,7 @@ import { FirebaseContext } from "../../context/FirebaseContext";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LogOutButton from "../auth/LogOutButton";
 import { MyModalContext } from "../../context/MyModalContext";
+import NavMenu from "./NavMenu";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -97,6 +98,7 @@ const Navbar = () => {
           onClick={onOpen}
           ref={btnRef}
         />
+        <NavMenu isAdmin={true} />
       </ButtonGroup>
 
       <Drawer
