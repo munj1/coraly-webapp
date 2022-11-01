@@ -75,6 +75,7 @@ const Navbar = () => {
   return (
     <Flex
       minWidth="max-content"
+      // w="calc(100vw)"
       alignItems="center"
       gap="2"
       p="3"

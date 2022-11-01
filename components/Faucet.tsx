@@ -34,7 +34,7 @@ const Faucet = () => {
         )}
         <Text textAlign={"center"}>
           Coraly Share Certificate - ERC1155 Contract address:
-          0x9e0D40764763341df8B15647da9D1EDe7040A19c
+          0x48e4b6dcdb5981d0a17C7E19F8f1a18a6d397438
         </Text>
         <Text textAlign={"center"}>
           Coraly NFT - ERC721 Contract Address:

@@ -9,22 +9,25 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
+import LazyMintShareTab from "../../components/admin/LazyMintShareTab";
+import List1155 from "../../components/admin/List1155";
 import RoleTab from "../../components/admin/RoleTab";
 import Navbar from "../../components/navwallet/Navbar";
 
 const AdminPage = () => {
   return (
-    <Box w={"full"}>
+    <Box>
       <Navbar />
       <Heading>Admin Page</Heading>
       <Tabs>
         <TabList>
-          <Tab>Roles</Tab>
-          <Tab>Share 등록</Tab>
-          <Tab>Share 목록</Tab>
-          <Tab>NFT 등록</Tab>
-          <Tab>NFT 목록</Tab>
-          <Tab>Sales(db)</Tab>
+          <Tab>Role</Tab>
+          <Tab>등록-share</Tab>
+          <Tab>등록-nft</Tab>
+          <Tab>등록-db</Tab>
+          <Tab>목록-share</Tab>
+          <Tab>목록-nft</Tab>
+          <Tab>목록-db</Tab>
         </TabList>
 
         <TabPanels>
@@ -33,23 +36,27 @@ const AdminPage = () => {
           </TabPanel>
 
           <TabPanel>
-            <Text>LazyMint ERC1155</Text>
+            <LazyMintShareTab />
           </TabPanel>
 
           <TabPanel>
-            <Text>Shares will be displayed here</Text>
+            <Text>Mint 721</Text>
           </TabPanel>
 
           <TabPanel>
-            <Text>LazyMint ERC721</Text>
+            <Text>db에서 sales 등록</Text>
           </TabPanel>
 
           <TabPanel>
-            <Text>NFTs will be displayed here</Text>
+            <List1155 />
           </TabPanel>
 
           <TabPanel>
-            <Text>firebase db에 등록하기</Text>
+            <Text>721 List</Text>
+          </TabPanel>
+
+          <TabPanel>
+            <Text>db에서 조회</Text>
           </TabPanel>
         </TabPanels>
       </Tabs>

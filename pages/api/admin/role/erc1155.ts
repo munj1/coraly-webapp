@@ -17,7 +17,7 @@ const mintUsdt = async (req: NextApiRequest, res: NextApiResponse) => {
       "mumbai"
     );
     const contract = await sdk.getContract(
-      "0x9e0D40764763341df8B15647da9D1EDe7040A19c",
+      "0x48e4b6dcdb5981d0a17C7E19F8f1a18a6d397438",
       "edition-drop"
     );
 
