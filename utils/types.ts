@@ -28,6 +28,7 @@ interface Sales {
   name: string;
   title: string;
   description?: string;
+  mediaUrl?: string;
 
   erc1155address: string;
   erc1155tokenId: string; // could be used as a id
@@ -41,8 +42,10 @@ interface Sales {
 
   sellerId?: string;
   buyers: string[];
-  isEnd: boolean;
+  status?: "onSale" | "soldOut" | "commingSoon";
 }
+
+type SaleStatus = "onSale" | "soldOut" | "commingSoon";
 
 interface Users {
   id: string;
@@ -75,4 +78,11 @@ interface Transactions {
   purchasedAt: FieldValue; //timestamp
 }
 
-export type { Sales, Users, Transactions, CoralyERC1155, CoralyERC721 };
+export type {
+  Sales,
+  Users,
+  Transactions,
+  CoralyERC1155,
+  CoralyERC721,
+  SaleStatus,
+};

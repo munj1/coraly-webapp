@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Spinner,
   Table,
   TableCaption,
@@ -13,7 +14,7 @@ import {
 import { collection, FieldValue } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { FirebaseContext } from "../../context/FirebaseContext";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Sales } from "../../utils/types";
 
 const ListSales = () => {
@@ -28,8 +29,9 @@ const ListSales = () => {
     if (!sales) return;
     const columns = [
       "name",
+      "mediaUrl",
       "sellerId",
-      "isEnd",
+      "status",
       "erc1155tokenId",
       "erc721tokenId",
     ];
@@ -78,7 +80,13 @@ const ListSales = () => {
           {data.map((item) => (
             <Tr key={item?.erc1155tokenId}>
               {columns.map((column) => (
-                <Td key={column}>{item[column]}</Td>
+                <Td key={column}>
+                  {column === "mediaUrl" ? (
+                    <Avatar src={item[column]} size="xl" />
+                  ) : (
+                    item[column]
+                  )}
+                </Td>
               ))}
             </Tr>
           ))}

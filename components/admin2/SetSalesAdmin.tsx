@@ -5,19 +5,33 @@ import {
   Textarea,
   Button,
   useToast,
+  Image,
+  Select,
 } from "@chakra-ui/react";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import moment from "moment";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { ERC1155_ADDRESS, ERC721_ADDRESS } from "../../utils/consts";
-import { Sales } from "../../utils/types";
+import { Sales, SaleStatus } from "../../utils/types";
 import { FirebaseContext } from "../../context/FirebaseContext";
 import { useContext } from "react";
+import { useUploadFile } from "react-firebase-hooks/storage";
+import { getDownloadURL, ref as storageRef } from "firebase/storage";
 
 const SetSalesAdmin = () => {
-  const { db } = useContext(FirebaseContext);
+  const { db, storage } = useContext(FirebaseContext);
   const ref = useRef<HTMLFormElement>(null);
   const toast = useToast();
+
+  const firestoreRef = storageRef(storage, "sales");
+  const [uploadFile, uploading, snapshot, error] = useUploadFile();
+  const [file, setFile] = useState<File>();
+
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -26,30 +40,53 @@ const SetSalesAdmin = () => {
 
     console.log("data", data);
 
-    const saleToUpload: Sales = {
-      // id: data.id as string, // auto generate
-      name: data.name as string,
-      description: data.description as string,
-      title: data.title as string,
-
-      erc1155address: data.erc1155address as string,
-      erc721address: data.erc721address as string,
-      erc1155tokenId: data.erc1155tokenId as string, //id
-      erc721tokenId: data.erc721tokenId as string,
-
-      saleStartAt: Timestamp.fromDate(new Date(data.saleStartAt as string)),
-      saleEndAt: Timestamp.fromDate(new Date(data.saleEndAt as string)),
-      createdAt: Timestamp.fromDate(new Date()),
-      updatedAt: Timestamp.fromDate(new Date()),
-
-      sellerId: data.sellerId as string,
-      buyers: [],
-      isEnd: false,
-    };
-
-    console.log("saleToUpload", saleToUpload);
+    // upload image to storage
+    const firestoreRef = storageRef(
+      storage,
+      `sales/${(data.erc1155tokenId as string) ?? "temp"}.jpg`
+    );
 
     try {
+      let mediaUrl = "";
+      if (file) {
+        const result = await uploadFile(firestoreRef, file, {
+          contentType: "image/jpeg",
+        });
+        toast({
+          title: "Image Upload success",
+          description: "Image Upload success",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        mediaUrl = await getDownloadURL(result.ref);
+      }
+
+      //
+      const saleToUpload: Sales = {
+        // id: data.id as string, // auto generate
+        name: data.name as string,
+        description: data.description as string,
+        title: data.title as string,
+
+        erc1155address: data.erc1155address as string,
+        erc721address: data.erc721address as string,
+        erc1155tokenId: data.erc1155tokenId as string, //id
+        erc721tokenId: data.erc721tokenId as string,
+
+        saleStartAt: Timestamp.fromDate(new Date(data.saleStartAt as string)),
+        saleEndAt: Timestamp.fromDate(new Date(data.saleEndAt as string)),
+        createdAt: Timestamp.fromDate(new Date()),
+        updatedAt: Timestamp.fromDate(new Date()),
+
+        sellerId: data.sellerId as string,
+        buyers: [],
+        status: data.status as SaleStatus,
+        mediaUrl,
+      };
+
+      console.log("saleToUpload", saleToUpload);
+
       await setDoc(
         doc(db, "sales", data.erc1155tokenId as string),
         saleToUpload
@@ -111,7 +148,7 @@ const SetSalesAdmin = () => {
         <Input name="erc721tokenId" placeholder="ERC721 Token ID" />
 
         <Text py="3" fontWeight={"extrabold"}>
-          Time, seller
+          sale start, sale end, status, seller
         </Text>
         <Input
           type="datetime-local"
@@ -123,9 +160,31 @@ const SetSalesAdmin = () => {
           name="saleEndAt"
           defaultValue={moment(time).format("YYYY-MM-DDTHH:mm")}
         />
+        <Select placeholder="Select status" name="status">
+          <option value="onSale">on sale</option>
+          <option value="commingSoon">comming soon</option>
+          <option value="soldOut">sold out</option>
+        </Select>
         <Input name="sellerId" placeholder="Id of seller" />
-        <Button type="submit">등록</Button>
+
+        <Text py="3" fontWeight={"extrabold"}>
+          Image (optional)
+        </Text>
+        {file && (
+          <Image
+            src={URL.createObjectURL(file)}
+            alt={"metadata"}
+            width="300"
+            height="300"
+            objectFit="cover"
+          />
+        )}
+        <Input type="file" onChange={handleFile} />
+        <Button type="submit" isLoading={uploading}>
+          등록
+        </Button>
       </form>
+      {error && <Text>Error uploading file: {error.message}</Text>}
     </VStack>
   );
 };

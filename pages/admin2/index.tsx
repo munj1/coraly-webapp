@@ -28,12 +28,11 @@ const AdminDBPage = () => {
 
         <TabPanels>
           <TabPanel>
-            <SetSalesAdmin />
+            {/* <SetSalesAdmin /> */}
+            <Text>만들었지만 쓸데없음</Text>
           </TabPanel>
 
-          <TabPanel>
-            <ListSales />
-          </TabPanel>
+          <TabPanel>{/* <ListSales /> */}</TabPanel>
           <TabPanel></TabPanel>
           <TabPanel></TabPanel>
         </TabPanels>
