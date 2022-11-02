@@ -23,7 +23,6 @@ interface CoralyERC721 {
 }
 
 /** DB */
-
 interface Sales {
   id?: string; // == erc1155tokenId
   name: string;
