@@ -17,8 +17,8 @@ const mintUsdt = async (req: NextApiRequest, res: NextApiResponse) => {
       "mumbai"
     );
     const contract = await sdk.getContract(
-      "0xd837a8bAADdEc64C4F84bb5321aD1410BcCf8146",
-      "nft-drop"
+      "0xe4fEDd9cca4e4D157452297eDd3A4aF1Ca47e396",
+      "nft-collection"
     );
 
     // get address from request

@@ -9,16 +9,18 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
+import MintNFTTab from "../../components/admin/MintNFTTab";
 import LazyMintShareTab from "../../components/admin/LazyMintShareTab";
 import List1155 from "../../components/admin/List1155";
 import RoleTab from "../../components/admin/RoleTab";
 import Navbar from "../../components/navwallet/Navbar";
+import List721 from "../../components/admin/List721";
 
 const AdminPage = () => {
   return (
     <Box>
       <Navbar />
-      <Heading>Admin Page</Heading>
+      <Heading>Admin Page - on chain </Heading>
       <Tabs>
         <TabList>
           <Tab>Role</Tab>
@@ -42,11 +44,11 @@ const AdminPage = () => {
           </TabPanel>
 
           <TabPanel>
-            <Text>Mint 721</Text>
+            <MintNFTTab />
           </TabPanel>
 
           <TabPanel>
-            <Text>721 List</Text>
+            <List721 />
           </TabPanel>
         </TabPanels>
       </Tabs>

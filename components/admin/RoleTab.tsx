@@ -17,7 +17,10 @@ const RoleTab = () => {
     contract: nft,
     isLoading: isLoadingNft,
     error: isErrorNft,
-  } = useContract("0xd837a8bAADdEc64C4F84bb5321aD1410BcCf8146", "nft-drop");
+  } = useContract(
+    "0xe4fEDd9cca4e4D157452297eDd3A4aF1Ca47e396",
+    "nft-collection"
+  );
 
   const {
     data: isNftMinter,

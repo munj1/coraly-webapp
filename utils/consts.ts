@@ -6,7 +6,7 @@ const MINTER_ROLE =
 const DEFAULT_ADMIN_ROLE =
   "0x1effbbff9c66c5e59634f24fe842750c60d18891155c32dd155fc2d661a4c86d";
 const ERC1155_ADDRESS = "0x48e4b6dcdb5981d0a17C7E19F8f1a18a6d397438";
-const ERC721_ADDRESS = "0xd837a8bAADdEc64C4F84bb5321aD1410BcCf8146";
+const ERC721_ADDRESS = "0xe4fEDd9cca4e4D157452297eDd3A4aF1Ca47e396";
 
 // GET request -> https://api.binance.com/api/v3/ticker/price?symbols=["ETHUSDT","MATICUSDT"]
 const getPricesFromBinance = async () => {

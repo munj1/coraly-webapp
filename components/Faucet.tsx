@@ -38,7 +38,7 @@ const Faucet = () => {
         </Text>
         <Text textAlign={"center"}>
           Coraly NFT - ERC721 Contract Address:
-          0xd837a8bAADdEc64C4F84bb5321aD1410BcCf8146
+          0xe4fEDd9cca4e4D157452297eDd3A4aF1Ca47e396
         </Text>
         <Text textAlign={"center"}>
           용어정리 : Share = ERC1155 , NFT = ERC721

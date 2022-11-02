@@ -8,7 +8,7 @@ const LazyMintShareTab = () => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File>();
   const [targetNftAddress, setTargetNftAddress] = useState(
-    "0xd837a8bAADdEc64C4F84bb5321aD1410BcCf8146"
+    "0xe4fEDd9cca4e4D157452297eDd3A4aF1Ca47e396"
   );
   const [targetNftTokenId, setTargetNftTokenId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -72,10 +72,12 @@ const LazyMintShareTab = () => {
         Sale에 올릴 NFT를 증명하는 코인(erc1155 nft) 를 등록(LazyMint) 합니다
       </Text>
       <Text>
-        차례대로 name, description, image, target nft address(option), target
-        nft tokenId(option) 입니다.
+        차례대로 name, description, image, target nft address, target nft
+        tokenId 입니다.
       </Text>
-      <Text>ERC1155는 LazyMint 후 claim condition을 설정해야 합니다</Text>
+      <Text>
+        ERC1155는 LazyMint 후 각 tokenId 별로 claim condition을 설정해야 합니다
+      </Text>
 
       <Input
         placeholder="Name"

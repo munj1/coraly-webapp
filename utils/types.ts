@@ -11,7 +11,16 @@ interface CoralyERC1155 {
   supply?: number; // not in a metadata
 }
 
-interface CoralyERC721 {}
+interface CoralyERC721 {
+  id: string;
+  name: string;
+  description: string;
+  image?: string;
+  uri?: string;
+  shareAddress?: string;
+  shareTokenId?: string;
+  owner?: string;
+}
 
 interface SalesType {
   id: string; //erc1155 tokenId
