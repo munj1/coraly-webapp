@@ -12,6 +12,11 @@ import {
   Text,
   Input,
   HStack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
 } from "@chakra-ui/react";
 import {
   useClaimConditions,
@@ -20,26 +25,93 @@ import {
 } from "@thirdweb-dev/react";
 import { ERC1155_ADDRESS, USDT_ADDRESS } from "../../utils/consts";
 import { ClaimConditionInput } from "@thirdweb-dev/sdk";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
-const SetClaimingConditionModal = ({ onClose, targetERC1155 }) => {
+const SetClaimingConditionModal = ({ targetERC1155 }) => {
   const [isSetting, setIsSetting] = useState(false);
-  const [claimConditionInput, setClaimConditionInput] =
-    useState<ClaimConditionInput>({
+  const [isSaved, setIsSaved] = useState({
+    0: false,
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+  });
+
+  const [claimConditionAll, setClaimConditionAll] = useState<
+    ClaimConditionInput[]
+  >([
+    {
       quantityLimitPerTransaction: "unlimited",
       startTime: new Date(),
       price: 0,
       currencyAddress: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
       maxQuantity: "unlimited",
       waitInSeconds: "0",
+    },
+    {
+      quantityLimitPerTransaction: "unlimited",
+      startTime: new Date(),
+      price: 0,
+      currencyAddress: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      maxQuantity: "unlimited",
+      waitInSeconds: "0",
+    },
+    {
+      quantityLimitPerTransaction: "unlimited",
+      startTime: new Date(),
+      price: 0,
+      currencyAddress: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      maxQuantity: "unlimited",
+      waitInSeconds: "0",
+    },
+    {
+      quantityLimitPerTransaction: "unlimited",
+      startTime: new Date(),
+      price: 0,
+      currencyAddress: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      maxQuantity: "unlimited",
+      waitInSeconds: "0",
+    },
+    {
+      quantityLimitPerTransaction: "unlimited",
+      startTime: new Date(),
+      price: 0,
+      currencyAddress: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      maxQuantity: "unlimited",
+      waitInSeconds: "0",
+    },
+  ]);
+  const refs = useRef<HTMLFormElement[]>([]);
+
+  const handleSave = (e, id) => {
+    e.preventDefault();
+
+    // console.log("ref", refs);
+    // console.log(refs.current[id]);
+    const form = refs.current[id];
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    // console.log("data", data);
+
+    const time = new Date(data.startTime as string);
+
+    const newClaimConditionAll = claimConditionAll.map((claimCondition, i) => {
+      if (i === id) {
+        return {
+          quantityLimitPerTransaction:
+            data.quantityLimitPerTransaction as string,
+          startTime: time as Date,
+          price: data.price as string,
+          currencyAddress: data.currencyAddress as string,
+          maxQuantity: data.maxQuantity as string,
+          waitInSeconds: data.waitInSeconds as string,
+        };
+      }
+      return claimCondition;
     });
 
-  const handleInputChange = (e) => {
-    let { name, value } = e.target;
-    if (name === "startTime") {
-      value = new Date(value);
-    }
-    setClaimConditionInput((prev) => ({ ...prev, [name]: value }));
+    setClaimConditionAll(newClaimConditionAll);
+    setIsSaved({ ...isSaved, [id]: true });
   };
 
   const { contract } = useContract(ERC1155_ADDRESS, "edition-drop");
@@ -49,41 +121,53 @@ const SetClaimingConditionModal = ({ onClose, targetERC1155 }) => {
     error: isErrorFetching,
   } = useClaimConditions(contract, targetERC1155);
 
-  useEffect(() => {
-    if (!claimConditions) return;
-    if (claimConditions?.length > 0) {
-      setClaimConditionInput({
-        quantityLimitPerTransaction:
-          claimConditions[0].quantityLimitPerTransaction,
-        startTime: claimConditions[0].startTime,
+  // fetching existing datas
+
+  const fetchExistingData = () => {
+    const parsedClaimConditions = claimConditions.map((claimCondition, i) => {
+      setIsSaved((prev) => {
+        return {
+          ...prev,
+          [i]: true,
+        };
+      });
+
+      return {
+        quantityLimitPerTransaction: claimCondition.quantityLimitPerTransaction,
+        startTime: claimCondition.startTime,
         price: (
-          claimConditions[0].price.div(10 ** 6).toNumber() /
+          claimCondition.price.div(10 ** 6).toNumber() /
           10 ** 12
         ).toString(),
-        currencyAddress: claimConditions[0].currencyAddress,
-        maxQuantity: claimConditions[0].maxQuantity,
-        waitInSeconds: claimConditions[0].waitInSeconds.toString(),
-      });
-    }
-  }, [claimConditions, isErrorFetching, isLoadingFetching]);
+        currencyAddress: claimCondition.currencyAddress,
+        maxQuantity: claimCondition.maxQuantity,
+        waitInSeconds: claimCondition.waitInSeconds.toString(),
+      };
+    });
+    setClaimConditionAll((prev) =>
+      [...parsedClaimConditions, ...prev].slice(0, 5)
+    );
+  };
 
-  // useEffect(() => {
-  //   if (claimConditionInput)
-  //     console.log("claimConditionInput", claimConditionInput);
-  // }, [claimConditionInput]);
-
+  // set claim conditions (blockchain transaction)
   const handleSetClaimConditions = async () => {
     setIsSetting(true);
+
+    let conditionsToSet: ClaimConditionInput[] = [];
+    for (let i = 0; i < claimConditionAll.length; i++) {
+      if (isSaved[i]) {
+        conditionsToSet.push(claimConditionAll[i]);
+      }
+    }
+    console.log("conditionsToSet", conditionsToSet);
+
     try {
-      await contract.claimConditions.set(targetERC1155, [
-        { ...claimConditionInput },
-      ]);
+      await contract.claimConditions.set(targetERC1155, conditionsToSet);
     } catch (e) {
       alert("error setting");
     }
     setIsSetting(false);
   };
-
   const handleDeleteClaimConditions = async () => {
     setIsSetting(true);
     try {
@@ -92,6 +176,81 @@ const SetClaimingConditionModal = ({ onClose, targetERC1155 }) => {
       alert("error deleting");
     }
     setIsSetting(false);
+  };
+
+  // useEffect console.log for debugging
+  useEffect(() => {
+    console.log("claimConditionAll", claimConditionAll);
+  }, [claimConditionAll]);
+
+  // render Inputs
+  const RenderInputs = ({ id }: { id: number }) => {
+    return (
+      <VStack key={id}>
+        <form
+          ref={(r) => (refs.current[id] = r)}
+          onSubmit={(e) => handleSave(e, id)}
+        >
+          <Text>
+            Sale start time (한국시간 기준, ex. 11/21/2022, 12:39:21 PM)
+          </Text>
+          <Input
+            name="startTime"
+            type="text"
+            defaultValue={claimConditionAll[id]?.startTime?.toLocaleString(
+              "en-KR"
+            )}
+          />
+
+          <Text>Price (ex. 1 = 1ETH) </Text>
+          <Input
+            name="price"
+            type="text"
+            defaultValue={claimConditionAll?.[id]?.price}
+          />
+
+          <Text>Currency Address</Text>
+          <Text fontSize={"xs"}>Test USDT Address: {USDT_ADDRESS}</Text>
+          <Text fontSize="xs">
+            default: 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE
+          </Text>
+          <Input
+            name="currencyAddress"
+            type="text"
+            defaultValue={claimConditionAll?.[id]?.currencyAddress}
+          />
+          <Text>Max Quantity - 총 claim 가능한 수량, unlimited = 무한</Text>
+          <Input
+            name="maxQuantity"
+            type="string"
+            defaultValue={claimConditionAll?.[id]?.maxQuantity}
+          />
+
+          <Text>
+            Quantity Limit Per Transaction - 한번 실행에 구매가능 수량,
+            unlimited 입력시 무제한
+          </Text>
+          <Input
+            name="quantityLimitPerTransaction"
+            type="stirng"
+            defaultValue={claimConditionAll?.[id]?.quantityLimitPerTransaction}
+          />
+
+          <Text>
+            Wait in Seconds - unlimited 입력시, 1회만 구매가능, 0입력시 제한없음
+          </Text>
+          <Input
+            name="waitInSeconds"
+            type="string"
+            defaultValue={claimConditionAll?.[id]?.waitInSeconds as string}
+          />
+          <HStack>
+            <Button type="submit">Save</Button>
+            {isSaved[id] ? <Text>Saved</Text> : <Text>Not Saved</Text>}
+          </HStack>
+        </form>
+      </VStack>
+    );
   };
 
   if (isLoadingFetching || isErrorFetching) {
@@ -111,67 +270,46 @@ const SetClaimingConditionModal = ({ onClose, targetERC1155 }) => {
       <ModalCloseButton />
       <ModalBody>
         {claimConditions && claimConditions.length > 0 && (
-          <Text fontWeight={"extrabold"}>
-            이미 설정한 값이 있습니다. 수정 또는 삭제 하시겠습니까?
-          </Text>
+          <HStack>
+            <Text fontWeight={"extrabold"}>
+              이미 설정한 값이 있습니다. 수정 또는 삭제 하시겠습니까?
+            </Text>
+            <Button size="xs" onClick={fetchExistingData}>
+              Fetch
+            </Button>
+          </HStack>
         )}
+        <Tabs>
+          <TabList>
+            <Tab>Claim condition #0</Tab>
+            <Tab>Claim condition #1</Tab>
+            <Tab>Claim condition #2</Tab>
+            <Tab>Claim condition #3</Tab>
+            <Tab>Claim condition #4</Tab>
+          </TabList>
 
-        <VStack>
-          <Text>Sale start time (한국시간 기준, 처음 양식 맞춰서)</Text>
-          <Input
-            name="startTime"
-            onChange={handleInputChange}
-            defaultValue={claimConditionInput?.startTime.toLocaleString(
-              "en-KR"
-            )}
-          />
-          <Text>Price (ex. 1 = 1ETH) </Text>
-          <Input
-            name="price"
-            type="number"
-            onChange={handleInputChange}
-            value={claimConditionInput?.price}
-          />
+          <TabPanels>
+            <TabPanel>
+              <RenderInputs id={0} />
+            </TabPanel>
 
-          <Text>
-            Currency Address - 0xeee... 는 native토큰(eth,poly등) 을 의미함
-          </Text>
-          <Text fontSize={"xs"}>Test USDT Address: {USDT_ADDRESS}</Text>
-          <Input
-            name="currencyAddress"
-            type="text"
-            value={claimConditionInput?.currencyAddress}
-            onChange={handleInputChange}
-          />
-          <Text>Max Quantity - 총 claim 가능한 수량</Text>
-          <Input
-            name="maxQuantity"
-            type="string"
-            value={claimConditionInput?.maxQuantity}
-            onChange={handleInputChange}
-          />
+            <TabPanel>
+              <RenderInputs id={1} />
+            </TabPanel>
 
-          <Text>
-            Quantity Limit Per Transaction - 한번 실행에 구매가능 수량,
-            unlimited 입력시 무제한
-          </Text>
-          <Input
-            name="quantityLimitPerTransaction"
-            type="stirng"
-            value={claimConditionInput?.quantityLimitPerTransaction}
-            onChange={handleInputChange}
-          />
+            <TabPanel>
+              <RenderInputs id={2} />
+            </TabPanel>
 
-          <Text>
-            Wait in Seconds - unlimited 입력시, 1회만 구매가능, 0입력시 제한없음
-          </Text>
-          <Input
-            name="waitInSeconds"
-            type="string"
-            value={claimConditionInput?.waitInSeconds as string}
-            onChange={handleInputChange}
-          />
-        </VStack>
+            <TabPanel>
+              <RenderInputs id={3} />
+            </TabPanel>
+
+            <TabPanel>
+              <RenderInputs id={4} />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </ModalBody>
 
       <ModalFooter>
@@ -197,10 +335,3 @@ const SetClaimingConditionModal = ({ onClose, targetERC1155 }) => {
 };
 
 export default SetClaimingConditionModal;
-
-// quantityLimitPerTransaction?: string | number;
-//     startTime?: Date;
-//     price?: string | number;
-//     currencyAddress?: string;
-//     maxQuantity?: string | number;
-//     waitInSeconds?: string | number | bigint | BigNumber;

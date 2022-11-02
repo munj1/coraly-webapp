@@ -22,35 +22,27 @@ interface CoralyERC721 {
   owner?: string;
 }
 
-interface SalesType {
-  id: string; //erc1155 tokenId
+interface Sales {
+  id: string; // auto generated salesId
   name: string;
+  title: string;
+  description?: string;
+
+  erc1155address: string;
+  erc1155tokenId: string;
   erc721address?: string;
-  erc721tokenId: string;
-  sellerId?: string;
+  erc721tokenId?: string;
 
-  totalAmount?: number;
-  price: number;
-  isFiat: boolean;
-  currency: string;
-
-  isSold: boolean;
   isListed: boolean;
-
   salesStartAt: FieldValue; //timestamp
   salesEndAt: FieldValue; //timestamp
   createdAt: FieldValue; //timestamp
 
-  metadataUrl: string;
-  metadataType: "image" | "gif" | "video" | "audio" | "document" | "etc";
-  bannerUrl?: string;
-  description?: string;
-  title: string;
-
+  sellerId?: string;
   buyers: string[];
 }
 
-interface UsersType {
+interface Users {
   id: string;
   photoURL?: string; // upper case
   displayName?: string;
@@ -67,7 +59,7 @@ interface UsersType {
   totalHolders?: number;
 }
 
-interface PurchaseType {
+interface Transactions {
   id: string; // auto generate
   buyerId: string;
   sellerId?: string;
@@ -80,4 +72,4 @@ interface PurchaseType {
   purchasedAt: FieldValue; //timestamp
 }
 
-export type { SalesType, UsersType, CoralyERC1155, CoralyERC721 };
+export type { Sales, Users, Transactions, CoralyERC1155, CoralyERC721 };

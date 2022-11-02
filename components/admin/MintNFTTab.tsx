@@ -20,8 +20,19 @@ const MintNFTTab = () => {
 
   const toast = useToast();
 
+  type NftToUpload = {
+    name: string;
+    description: string;
+    image: File;
+    shareAddress?: string;
+    shareTokenId?: string;
+  };
+
   const handleMint = async () => {
-    const metadata = { name, description, image, shareAddress, shareTokenId };
+    let metadata: NftToUpload = { name, description, image };
+    if (shareAddress && shareTokenId) {
+      metadata = { name, description, image, shareAddress, shareTokenId };
+    }
 
     setIsLoading(true);
     try {
