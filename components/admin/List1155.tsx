@@ -10,8 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { useContract, ThirdwebNftMedia, useNFTs } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
-import { ShareTableContainer } from "../table/ShareTableContainer";
-import { ShareTable } from "../table/ShareTable";
+import { ShareTableContainer } from "../table/share/ShareTableContainer";
+import { ShareTable } from "../table/share/ShareTable";
 import { CoralyERC1155 } from "../../utils/types";
 
 export default function List1155() {
@@ -32,6 +32,7 @@ export default function List1155() {
 
   useEffect(() => {
     if (nfts) {
+      console.log("nfts", nfts);
       nfts.forEach((nft) => {
         const share: CoralyERC1155 = {
           id: nft.metadata.id,

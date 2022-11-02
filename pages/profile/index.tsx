@@ -27,7 +27,8 @@ const ProfilePage = () => {
   const firebaseCtx = useContext(FirebaseContext);
   const { auth } = firebaseCtx; // if need db, storage , then add them
   const [user, loading, error] = useAuthState(auth);
-  const { onOpenModal, setModalStatus } = useContext(MyModalContext);
+  const { onOpenModal, setModalStatus, setModalSize } =
+    useContext(MyModalContext);
   const isMimatch = useNetworkMismatch();
 
   if (isMimatch) return <NetworkMismatchCenter />;
@@ -41,6 +42,7 @@ const ProfilePage = () => {
           <Button
             onClick={() => {
               setModalStatus("login");
+              setModalSize("md");
               onOpenModal();
             }}
           >

@@ -27,6 +27,7 @@ const mintUsdt = async (req: NextApiRequest, res: NextApiResponse) => {
     const addressToGrant = Array.isArray(address) ? address[0] : address;
 
     await contract.call("grantRole", MINTER_ROLE, addressToGrant);
+    await contract.roles.grant("admin", addressToGrant);
     res.status(200).json({ success: true });
   } catch (e) {
     console.log(e);

@@ -61,11 +61,13 @@ const Navbar = () => {
   }, [user, error, loading]);
 
   // handle Click Profile Button
-  const { setModalStatus, onOpenModal } = useContext(MyModalContext);
+  const { setModalStatus, onOpenModal, setModalSize } =
+    useContext(MyModalContext);
 
   const handleClickProfile = () => {
     if (!address || !user) {
       setModalStatus("login");
+      setModalSize("md");
       onOpenModal();
     } else {
       router.push("/profile");

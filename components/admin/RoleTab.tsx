@@ -137,10 +137,10 @@ const RoleTab = () => {
       <Text>NFT(ERC721) Minter: {isNftMinter ? "true" : "false"}</Text>
 
       <Button onClick={hanldeRequestRoleShare} isLoading={isLoadingReqeust}>
-        Request MINTER ROLE in Share (ERC1155)
+        Request MINTER & ADMIN ROLE in Share (ERC1155)
       </Button>
       <Button onClick={hanldeRequestRoleNFT} isLoading={isLoadingReqeust}>
-        Request MINTER ROLE in NFT (ERC721)
+        Request MINTER & ADMIN ROLE in NFT (ERC721)
       </Button>
 
       <Faucet />
