@@ -22,24 +22,27 @@ interface CoralyERC721 {
   owner?: string;
 }
 
+/** DB */
+
 interface Sales {
-  id: string; // auto generated salesId
+  id?: string; // == erc1155tokenId
   name: string;
   title: string;
   description?: string;
 
   erc1155address: string;
-  erc1155tokenId: string;
+  erc1155tokenId: string; // could be used as a id
   erc721address?: string;
   erc721tokenId?: string;
 
-  isListed: boolean;
-  salesStartAt: FieldValue; //timestamp
-  salesEndAt: FieldValue; //timestamp
+  saleStartAt: FieldValue; //timestamp
+  saleEndAt: FieldValue; //timestamp
   createdAt: FieldValue; //timestamp
+  updatedAt: FieldValue; //timestamp
 
   sellerId?: string;
   buyers: string[];
+  isEnd: boolean;
 }
 
 interface Users {
@@ -51,10 +54,11 @@ interface Users {
   twitter?: string;
   youtube?: string;
 
-  myNfts?: { string: number }; // salesId : amount
+  myNfts?: { string: number }; // erc1155 tokenId : amount
   myPurchases?: string[];
 
-  isArtist: boolean;
+  isAdmin?: boolean;
+  isArtist?: boolean;
   mySales?: string[];
   totalHolders?: number;
 }

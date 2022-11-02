@@ -26,6 +26,7 @@ import {
 import { ERC1155_ADDRESS, USDT_ADDRESS } from "../../utils/consts";
 import { ClaimConditionInput } from "@thirdweb-dev/sdk";
 import { useEffect, useState, useRef } from "react";
+import moment from "moment";
 
 const SetClaimingConditionModal = ({ targetERC1155 }) => {
   const [isSetting, setIsSetting] = useState(false);
@@ -191,14 +192,12 @@ const SetClaimingConditionModal = ({ targetERC1155 }) => {
           ref={(r) => (refs.current[id] = r)}
           onSubmit={(e) => handleSave(e, id)}
         >
-          <Text>
-            Sale start time (한국시간 기준, ex. 11/21/2022, 12:39:21 PM)
-          </Text>
+          <Text>Sale start time</Text>
           <Input
             name="startTime"
-            type="text"
-            defaultValue={claimConditionAll[id]?.startTime?.toLocaleString(
-              "en-KR"
+            type="datetime-local"
+            defaultValue={moment(claimConditionAll[id]?.startTime).format(
+              "YYYY-MM-DDTHH:mm:ss"
             )}
           />
 

@@ -13,10 +13,7 @@ const Modals = () => {
       <ModalOverlay />
       {modalStatus == "login" && <LoginModalContent onClose={onCloseModal} />}
       {modalStatus == "setClaimingCondition" && (
-        <SetClaimingConditionModal
-          onClose={onCloseModal}
-          targetERC1155={targetERC1155}
-        />
+        <SetClaimingConditionModal targetERC1155={targetERC1155} />
       )}
     </Modal>
   );

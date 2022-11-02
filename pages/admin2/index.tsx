@@ -9,6 +9,7 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
+import SetSalesAdmin from "../../components/admin2/SetSalesAdmin";
 import Navbar from "../../components/navwallet/Navbar";
 
 const AdminDBPage = () => {
@@ -26,7 +27,7 @@ const AdminDBPage = () => {
 
         <TabPanels>
           <TabPanel>
-            <Text>Sales 등록</Text>
+            <SetSalesAdmin />
           </TabPanel>
 
           <TabPanel></TabPanel>

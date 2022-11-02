@@ -29,7 +29,7 @@ const NavMenu = ({ isAdmin }: { isAdmin: boolean }) => {
             <MenuItem onClick={() => router.push("/admin")}>
               Admin - on chain
             </MenuItem>
-            <MenuItem onClick={() => router.push("/admin/db")}>
+            <MenuItem onClick={() => router.push("/admin2")}>
               Admin - off chain
             </MenuItem>
           </>
