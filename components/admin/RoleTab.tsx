@@ -3,6 +3,7 @@ import { useContract, useAddress, useContractRead } from "@thirdweb-dev/react";
 import { useState, useEffect } from "react";
 import { MINTER_ROLE } from "../../utils/consts";
 import Faucet from "../Faucet";
+import { NFT_ABI } from "../../utils/abi";
 
 const RoleTab = () => {
   const [isLoadingReqeust, setIsLoadingRequest] = useState(false);
@@ -17,10 +18,7 @@ const RoleTab = () => {
     contract: nft,
     isLoading: isLoadingNft,
     error: isErrorNft,
-  } = useContract(
-    "0xe4fEDd9cca4e4D157452297eDd3A4aF1Ca47e396",
-    "nft-collection"
-  );
+  } = useContract("0xe4fEDd9cca4e4D157452297eDd3A4aF1Ca47e396", NFT_ABI);
 
   const {
     data: isNftMinter,

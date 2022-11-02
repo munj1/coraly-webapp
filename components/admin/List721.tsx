@@ -16,11 +16,12 @@ import { CoralyERC721 } from "../../utils/types";
 import { ERC721_ADDRESS } from "../../utils/consts";
 import { NftTableContainer } from "../table/nft/NftTableContainer";
 import { NftTable } from "../table/nft/NftTable";
+import { NFT_ABI } from "../../utils/abi";
 
 export default function List721() {
   const [metadatas, setMetadatas] = useState<CoralyERC721[]>([]);
   // Get your NFT Collection using it's contract address
-  const { contract } = useContract(ERC721_ADDRESS, "nft-collection");
+  const { contract } = useContract(ERC721_ADDRESS, NFT_ABI);
 
   // Load (and cache) the metadata for the NFT with token ID 0
   const {

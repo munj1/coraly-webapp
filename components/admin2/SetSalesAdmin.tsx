@@ -74,6 +74,11 @@ const SetSalesAdmin = () => {
         erc1155tokenId: data.erc1155tokenId as string, //id
         erc721tokenId: data.erc721tokenId as string,
 
+        price: data.price as string,
+        currency: data.currency as string,
+        status: data.status as SaleStatus,
+        amount: "0",
+
         saleStartAt: Timestamp.fromDate(new Date(data.saleStartAt as string)),
         saleEndAt: Timestamp.fromDate(new Date(data.saleEndAt as string)),
         createdAt: Timestamp.fromDate(new Date()),
@@ -81,7 +86,6 @@ const SetSalesAdmin = () => {
 
         sellerId: data.sellerId as string,
         buyers: [],
-        status: data.status as SaleStatus,
         mediaUrl,
       };
 
@@ -128,7 +132,7 @@ const SetSalesAdmin = () => {
         />
 
         <Text py="3" fontWeight={"extrabold"}>
-          Share Info (ERC1155)
+          Share Info (ERC1155) - 필수
         </Text>
         <Input
           name="erc1155address"
@@ -148,7 +152,18 @@ const SetSalesAdmin = () => {
         <Input name="erc721tokenId" placeholder="ERC721 Token ID" />
 
         <Text py="3" fontWeight={"extrabold"}>
-          sale start, sale end, status, seller
+          Price, Currency, Status
+        </Text>
+        <Input name="price" placeholder="price of each share" />
+        <Input name="currency" placeholder="currency accepted for sale" />
+        <Select placeholder="Select status" name="status">
+          <option value="onSale">on sale</option>
+          <option value="commingSoon">comming soon</option>
+          <option value="soldOut">sold out</option>
+        </Select>
+
+        <Text py="3" fontWeight={"extrabold"}>
+          Sale start, Sale end, Seller
         </Text>
         <Input
           type="datetime-local"
@@ -160,15 +175,10 @@ const SetSalesAdmin = () => {
           name="saleEndAt"
           defaultValue={moment(time).format("YYYY-MM-DDTHH:mm")}
         />
-        <Select placeholder="Select status" name="status">
-          <option value="onSale">on sale</option>
-          <option value="commingSoon">comming soon</option>
-          <option value="soldOut">sold out</option>
-        </Select>
         <Input name="sellerId" placeholder="Id of seller" />
 
         <Text py="3" fontWeight={"extrabold"}>
-          Image (optional)
+          Image (추후 gif, video 지원 예정)
         </Text>
         {file && (
           <Image

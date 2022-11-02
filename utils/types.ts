@@ -43,45 +43,49 @@ interface Sales {
   sellerId?: string;
   buyers: string[];
   status?: "onSale" | "soldOut" | "commingSoon";
+
+  amount?: string;
+  price?: string;
+  currency?: string;
 }
 
 type SaleStatus = "onSale" | "soldOut" | "commingSoon";
 
-interface Users {
-  id: string;
-  photoURL?: string; // upper case
-  displayName?: string;
-  email?: string;
-  instagram?: string;
-  twitter?: string;
-  youtube?: string;
+// interface Users {
+//   id: string;
+//   photoURL?: string; // upper case
+//   displayName?: string;
+//   email?: string;
+//   instagram?: string;
+//   twitter?: string;
+//   youtube?: string;
 
-  myNfts?: { string: number }; // erc1155 tokenId : amount
-  myPurchases?: string[];
+//   myNfts?: { string: number }; // erc1155 tokenId : amount
+//   myPurchases?: string[];
 
-  isAdmin?: boolean;
-  isArtist?: boolean;
-  mySales?: string[];
-  totalHolders?: number;
-}
+//   isAdmin?: boolean;
+//   isArtist?: boolean;
+//   mySales?: string[];
+//   totalHolders?: number;
+// }
 
-interface Transactions {
-  id: string; // auto generate
-  buyerId: string;
-  sellerId?: string;
-  salesId: string;
+// interface Transactions {
+//   id: string; // auto generate
+//   buyerId: string;
+//   sellerId?: string;
+//   salesId: string;
 
-  price: number;
-  isFiat: boolean;
-  currency: string;
-  amount: number;
-  purchasedAt: FieldValue; //timestamp
-}
+//   price: number;
+//   isFiat: boolean;
+//   currency: string;
+//   amount: number;
+//   purchasedAt: FieldValue; //timestamp
+// }
 
 export type {
   Sales,
-  Users,
-  Transactions,
+  // Users,
+  // Transactions,
   CoralyERC1155,
   CoralyERC721,
   SaleStatus,

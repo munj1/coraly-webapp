@@ -1,8 +1,8 @@
 import {
   Badge,
   Box,
-  Center,
   Flex,
+  Heading,
   HStack,
   Image,
   Text,
@@ -10,19 +10,28 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
-const Card = ({ status, imgUrl, title }) => {
-  // status : onSale, soldOut, comingSoon
-  // if status == onSale, get Amount of sold tokens
-  const router = useRouter();
+export type CardProps = {
+  status: string;
+  title: string;
+  imageUrl: string;
+  id: string;
+  price: string;
+  amount: string;
+  currency: string;
+  name: string;
+};
 
-  const renderStatus = () => {
-    return (
-      <Flex w="full" justify={"space-between"} p="2" align={"center"}>
-        <Badge size={["xs", "sm"]}>ONSALE</Badge>
-        <Text size={["xs", "sm"]}>3188 pieces sold</Text>
-      </Flex>
-    );
-  };
+const Card = ({
+  status,
+  imageUrl,
+  title,
+  id,
+  price,
+  amount,
+  currency,
+  name,
+}: CardProps) => {
+  const router = useRouter();
 
   return (
     <Box
@@ -31,12 +40,23 @@ const Card = ({ status, imgUrl, title }) => {
       height={[200, 300, 400]}
       cursor={"pointer"}
       rounded={"md"}
-      onClick={() => router.push("/detail")}
+      onClick={() => router.push(`/sales/${id}`)}
     >
       <Flex height={"70%"}>
-        <Image src={imgUrl} alt={title} objectFit={"cover"} w="full" />
+        <Image src={imageUrl} alt={title} objectFit={"cover"} w="full" />
       </Flex>
-      <VStack>{renderStatus()}</VStack>
+      <VStack align={"flex-end"} pt="2" px="6">
+        <Flex justify={"space-between"} align={"center"} w="full">
+          <Badge size={["xs", "sm"]}>{status}</Badge>
+          <Heading size={["xs", "sm"]} textAlign="right">
+            {name}
+          </Heading>
+        </Flex>
+        <Text size={["xs", "sm"]} textAlign="end">
+          {price} {currency}
+        </Text>
+        <Text size={["xs", "sm"]}>{amount} piece sold</Text>
+      </VStack>
     </Box>
   );
 };

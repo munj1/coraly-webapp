@@ -2,6 +2,7 @@ import { Input, Text, VStack, useToast, Button, Image } from "@chakra-ui/react";
 import { useContract } from "@thirdweb-dev/react";
 import { useState } from "react";
 import { ERC1155_ADDRESS, ERC721_ADDRESS } from "../../utils/consts";
+import { NFT_ABI, SHARE_ABI } from "../../utils/abi";
 
 const MintNFTTab = () => {
   const [mintTo, setMintTo] = useState("");

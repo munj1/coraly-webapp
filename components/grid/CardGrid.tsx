@@ -1,11 +1,6 @@
 import { SimpleGrid, Spinner } from "@chakra-ui/react";
 import Card from "./Card";
-
-type CardProps = {
-  status: string;
-  title: string;
-  imgUrl: string;
-};
+import { CardProps } from "./Card";
 
 const CardGrid = ({ data }: { data: CardProps[] }) => {
   if (!data) {
@@ -18,8 +13,13 @@ const CardGrid = ({ data }: { data: CardProps[] }) => {
         <Card
           status={data.status}
           title={data.title}
-          imgUrl={data.imgUrl}
-          key={data.title}
+          imageUrl={data.imageUrl}
+          key={data.id}
+          id={data.id}
+          price={data.price}
+          amount={data.amount}
+          currency={data.currency}
+          name={data.name}
         />
       ))}
     </SimpleGrid>

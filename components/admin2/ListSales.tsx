@@ -30,10 +30,11 @@ const ListSales = () => {
     const columns = [
       "name",
       "mediaUrl",
-      "sellerId",
+      "price",
+      "currency",
+      "amount",
       "status",
       "erc1155tokenId",
-      "erc721tokenId",
     ];
 
     const data = sales.map((sale) => {
@@ -68,7 +69,7 @@ const ListSales = () => {
   return (
     <TableContainer>
       <Table variant="simple">
-        <TableCaption>List of Sales</TableCaption>
+        <TableCaption>List of Sales (수정, 삭제 지원예정) </TableCaption>
         <Thead>
           <Tr>
             {columns.map((column) => (

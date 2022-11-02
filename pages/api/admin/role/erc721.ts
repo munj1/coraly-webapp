@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import dotenv from "dotenv";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { MINTER_ROLE } from "../../../../utils/consts";
+import { NFT_ABI } from "../../../../utils/abi";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ const mintUsdt = async (req: NextApiRequest, res: NextApiResponse) => {
     );
     const contract = await sdk.getContract(
       "0xe4fEDd9cca4e4D157452297eDd3A4aF1Ca47e396",
-      "nft-collection"
+      NFT_ABI
     );
 
     // get address from request
