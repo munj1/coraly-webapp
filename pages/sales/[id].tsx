@@ -67,19 +67,10 @@ const DetailPage = ({ nft, share, id, condition }) => {
   const handleClaim = async () => {
     try {
       claimNft({ to: address, tokenId: id, quantity: amountToBuy });
-
-      // admin 단에서 처리해야할듯
-      // 사실 db에 저장할 필요가 없을지도
-      await incrementSupply({ db, id, amount: amountToBuy });
       console.log("incremented supply");
+      await incrementSupply({ db, id, amount: amountToBuy });
     } catch (e) {
-      toast({
-        title: "Claim failed",
-        description: "Claim failed",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
+      console.log(e);
     }
   };
 
