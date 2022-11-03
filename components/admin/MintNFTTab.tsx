@@ -17,7 +17,7 @@ const MintNFTTab = () => {
     contract: nft,
     isLoading: isLoadingShare,
     error: isErrorShare,
-  } = useContract(ERC721_ADDRESS, "nft-collection");
+  } = useContract(ERC721_ADDRESS, NFT_ABI);
 
   const toast = useToast();
 
@@ -35,9 +35,12 @@ const MintNFTTab = () => {
       metadata = { name, description, image, shareAddress, shareTokenId };
     }
 
+    console.log(metadata);
+    console.log("nft", nft.erc721);
+
     setIsLoading(true);
     try {
-      const results = await nft.mintTo(mintTo, metadata);
+      const results = await nft.erc721.mintTo(mintTo, metadata);
       toast({
         title: "Success",
         description: "Mint Success",
