@@ -9,6 +9,7 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Navbar from "../../components/navwallet/Navbar";
 import {
@@ -119,6 +120,17 @@ const DetailPage = ({ nft, share, id, condition }) => {
             <Button onClick={handleClaim} isLoading={isClaiming}>
               Buy
             </Button>
+            {id === "0" && (
+              <>
+                <Link href="https://paper.xyz/checkout/b8b5a26e-1840-44ac-aa1e-5218c4e07577">
+                  <Button>Pay with Credit Card</Button>
+                </Link>
+                <Text size="xs">
+                  카드결제는 paper.xyz 이용한거임 링크를 따로 생성해서 db에
+                  저장해야함
+                </Text>
+              </>
+            )}
           </>
         )}
         {condition === null && <Heading>This token is not on sale yet</Heading>}

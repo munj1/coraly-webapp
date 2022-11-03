@@ -50,7 +50,6 @@ const Sales = () => {
         <Heading>On Sale</Heading>
         <CardGrid data={data} />
       </VStack>
-      <Text size="xs">메인페이지는 추후 Static하게 만들예정임</Text>
     </VStack>
   );
 };

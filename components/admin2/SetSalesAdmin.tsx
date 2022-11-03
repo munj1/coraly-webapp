@@ -119,6 +119,7 @@ const SetSalesAdmin = () => {
   return (
     <VStack spacing="3">
       <Text fontWeight={"bold"}>Add New Sales</Text>
+      <Text>아직 DB 스키마, DB 용도 확정 x</Text>
       <form ref={ref} onSubmit={handleSubmit}>
         <Text py="3" fontWeight={"extrabold"}>
           Name, Title, Description
