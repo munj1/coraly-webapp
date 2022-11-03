@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Heading,
   HStack,
   Image,
   Spinner,
@@ -28,6 +29,8 @@ import { incrementSupply } from "../../utils/firestore/updateSales";
 import SliderInput from "../../components/details/SliderInput";
 import { Condition } from "../../utils/types";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import NetworkMismatchCenter from "../../components/auth/NetworkMismatchCenter";
+import { MyModalContext } from "../../context/MyModalContext";
 
 const DetailPage = ({ nft, share, id, condition }) => {
   const address = useAddress();
@@ -49,6 +52,16 @@ const DetailPage = ({ nft, share, id, condition }) => {
   } = useClaimNFT(contract);
 
   const { db } = useContext(FirebaseContext);
+  const { onOpenModal, setModalStatus, setModalSize } =
+    useContext(MyModalContext);
+
+  useEffect(() => {
+    if (!address) {
+      setModalStatus("login");
+      setModalSize("md");
+      onOpenModal();
+    }
+  }, [address, onOpenModal, setModalSize, setModalStatus]);
 
   const handleClaim = async () => {
     try {
@@ -69,17 +82,10 @@ const DetailPage = ({ nft, share, id, condition }) => {
     }
   };
 
-  if (nft == null || condition == null) {
-    toast({
-      title: "NFT not found",
-      description: "NFT not found",
-      status: "error",
-      duration: 9000,
-      isClosable: true,
-    });
-  }
-
-  if (!condition || isLoading) return <Spinner />;
+  if (!address) if (nft == null) return <Text>Error Loading nft</Text>;
+  if (isLoading) return <Spinner />;
+  if (isMismatch) return <NetworkMismatchCenter />;
+  if (!address) return <></>;
 
   return (
     <Box w={"full"}>
@@ -93,21 +99,28 @@ const DetailPage = ({ nft, share, id, condition }) => {
           maxWidth="400px"
         />
         <Text>Amount Sold: {currentSupply}</Text>
+        {condition !== null && (
+          <>
+            <Text>
+              Price Per Unit: {condition?.currencyMetadata?.displayValue}{" "}
+              {condition?.currencyMetadata?.symbol}
+            </Text>
+            <Text>Amount of Unit To Buy</Text>
+            <SliderInput
+              value={amountToBuy}
+              handleChange={handleAmountChange}
+            />
+            <Text>
+              You will buy {calculatePercentage(amountToBuy, currentSupply)}% of
+              this NFT
+            </Text>
 
-        <Text>
-          Price Per Unit: {condition?.currencyMetadata?.displayValue}{" "}
-          {condition?.currencyMetadata?.symbol}
-        </Text>
-        <Text>Amount of Unit To Buy</Text>
-        <SliderInput value={amountToBuy} handleChange={handleAmountChange} />
-        <Text>
-          You will buy {calculatePercentage(amountToBuy, currentSupply)}% of
-          this NFT
-        </Text>
-
-        <Button onClick={handleClaim} isLoading={isClaiming}>
-          Buy
-        </Button>
+            <Button onClick={handleClaim} isLoading={isClaiming}>
+              Buy
+            </Button>
+          </>
+        )}
+        {condition === null && <Heading>This token is not on sale yet</Heading>}
       </VStack>
     </Box>
   );
