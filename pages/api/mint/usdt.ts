@@ -26,7 +26,7 @@ const mintUsdt = async (req: NextApiRequest, res: NextApiResponse) => {
     // if address is a array, get the first element
     const addressToMint = Array.isArray(address) ? address[0] : address;
 
-    const amount = "1000";
+    const amount = "10000";
     await contract.mintTo(addressToMint, amount);
     res.status(200).json({ success: true });
   } catch (e) {

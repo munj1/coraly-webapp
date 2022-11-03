@@ -1,3 +1,6 @@
+import { BigNumber } from "ethers";
+import { formatEther } from "ethers/lib/utils";
+
 const WETH_ADDRESS = "";
 const USDT_ADDRESS = "0xb91cE3b033aA02B92DA9Be3D7264aF58802d476a"; // 내가 만든거임; https://thirdweb.com/mumbai/0xb91cE3b033aA02B92DA9Be3D7264aF58802d476a/
 const USDC_ADDRESS = "";
@@ -29,11 +32,22 @@ const shortenAddress = (address: string) => {
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 };
 
+const parseBigNumber = (number: BigNumber) => {
+  return parseFloat(formatEther(number)).toString();
+};
+
+const calculatePercentage = (input: number, total: number) => {
+  if (total === 0) return 100;
+  return (input / (total + input)) * 100;
+};
+
 export {
   USDT_ADDRESS,
   ERC1155_ADDRESS,
   ERC721_ADDRESS,
   getPricesFromBinance,
   shortenAddress,
+  parseBigNumber,
+  calculatePercentage,
   MINTER_ROLE,
 };

@@ -77,7 +77,7 @@ const SetSalesAdmin = () => {
         price: data.price as string,
         currency: data.currency as string,
         status: data.status as SaleStatus,
-        amount: "0",
+        amount: 0,
 
         saleStartAt: Timestamp.fromDate(new Date(data.saleStartAt as string)),
         saleEndAt: Timestamp.fromDate(new Date(data.saleEndAt as string)),

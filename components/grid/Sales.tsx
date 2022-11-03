@@ -24,7 +24,7 @@ const Sales = () => {
         id: sale?.erc1155tokenId as string,
         name: sale?.name as string,
         price: sale?.price as string,
-        amount: sale?.amount as string,
+        amount: sale?.amount?.toString() as string,
         currency: sale?.currency as string,
         status: sale?.status as string,
         imageUrl: sale?.mediaUrl as string,
