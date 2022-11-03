@@ -41,7 +41,7 @@ const Faucet = () => {
           0xe4fEDd9cca4e4D157452297eDd3A4aF1Ca47e396
         </Text>
         <Text textAlign={"center"}>
-          용어정리 : Share = ERC1155 , NFT = ERC721
+          참고 - Gasless Transaction 하려면 ERC20으로만 결제를 받아야 함
         </Text>
       </VStack>
     </Container>
