@@ -78,6 +78,10 @@ const MyNFTBalance = () => {
         console.error(e);
       }
     });
+
+    return () => {
+      setOwnedNFTs(undefined);
+    };
   }, [address, fetchedShare, sdk, shareContract]);
 
   return (
