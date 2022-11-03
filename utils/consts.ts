@@ -41,6 +41,19 @@ const calculatePercentage = (input: number, total: number) => {
   return (input / (total + input)) * 100;
 };
 
+const getPercentage = (input: number, total: number) => {
+  if (total === 0) return 0;
+  return (input / total) * 100;
+};
+
+const parseBignuberToNumber = (number: BigNumber) => {
+  return parseFloat(formatEther(number));
+};
+
+const shortenFloat = (number: number) => {
+  return number.toFixed(2);
+};
+
 export {
   USDT_ADDRESS,
   ERC1155_ADDRESS,
@@ -48,6 +61,8 @@ export {
   getPricesFromBinance,
   shortenAddress,
   parseBigNumber,
+  parseBignuberToNumber,
   calculatePercentage,
+  getPercentage,
   MINTER_ROLE,
 };

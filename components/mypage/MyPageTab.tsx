@@ -6,6 +6,7 @@ import {
   TabPanel,
   Text,
 } from "@chakra-ui/react";
+import MyNFTBalance from "./MyNFTBalance";
 import UpdateUser from "./UpdateUser";
 
 const MyPageTab = () => {
@@ -20,12 +21,11 @@ const MyPageTab = () => {
 
       <TabPanels>
         <TabPanel>
-          <Text>보유 NFT 목록 - Coraly에서 구매한 것만</Text>
-          <Text>지분증명 NFT, Merge된 NFT 모두 출력</Text>
+          <MyNFTBalance />
         </TabPanel>
         <TabPanel>
           <Text>구매내역</Text>
-          <Text>DB에서 꺼내오면됨</Text>
+          <Text>DB에서 읽거나 또는, 체인에서 Event 읽어와도 될듯</Text>
         </TabPanel>
         <TabPanel>
           <UpdateUser />

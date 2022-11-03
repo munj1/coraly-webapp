@@ -82,7 +82,8 @@ const DetailPage = ({ nft, share, id, condition }) => {
     }
   };
 
-  if (!address) if (nft == null) return <Text>Error Loading nft</Text>;
+  if (share == null) return <Text>Invalid Page</Text>;
+  if (nft == null) return <Text>Error Loading nft</Text>;
   if (isLoading) return <Spinner />;
   if (isMismatch) return <NetworkMismatchCenter />;
   if (!address) return <></>;

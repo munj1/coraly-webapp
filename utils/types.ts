@@ -23,57 +23,38 @@ interface CoralyERC721 {
   owner?: string;
 }
 
-// {
-//   owner: '0x0000000000000000000000000000000000000000',
-//   metadata: {
-//     name: 'Awesome Merge#1',
-//     description: 'This is Awesome Merge#1 NFT',
-//     image: 'https://gateway.ipfscdn.io/ipfs/QmbAPDwwgWB8EAdH8C3Ysr9PJwWasgzDJgdcfoyNBXYCC1/1.png',
-//     id: '1',
-//     uri: 'ipfs://QmS3CxcQeu6qqNgpG2sfn17eHcpY2o2ddmhetBLZ2egjcb/1',
-//     nftAddress: '0x48e4b6dcdb5981d0a17C7E19F8f1a18a6d397438',
-//     nftTokenId: '1'
-//   },
-//   type: 'ERC721',
-//   supply: 1
-// } {
-//   owner: '0x0000000000000000000000000000000000000000',
-//   metadata: {
-//     name: 'Awesome Merge#1 NFT Share Certificate',
-//     description: 'This token entitles the holder to a share of the Awesome Merge#1 NFT',
-//     image: 'https://gateway.ipfscdn.io/ipfs/QmNUk6uHbi7EE38eyKff7Eh8AKduYkpvppoZriy6V3rE32/1.png',
-//     id: '1',
-//     uri: 'ipfs://QmcDkmrwFtzEJstXsfJPKgseLepABLdZ5gjoyTynNDHWuP/1',
-//     targetNftAddress: '0xd837a8bAADdEc64C4F84bb5321aD1410BcCf8146',
-//     targetNftTokenId: '1'
-//   },
-//   type: 'ERC1155',
-//   supply: 0
-// }
+interface FetchedCoralyERC1155 {
+  owner: string;
+  metadata: CoralyERC1155;
+  type: string;
+  supply: number;
+}
 
-// share, nft
+interface FetchedCoralyERC721 {
+  owner: string;
+  metadata: CoralyERC721;
+  type: string;
+  supply: number;
+}
 
-// [
-//   {
-//     startTime: "2022-11-02T14:40:00.000Z",
-//     currencyAddress: "0xb91cE3b033aA02B92DA9Be3D7264aF58802d476a",
-//     price: { type: "BigNumber", hex: "0x056bc75e2d63100000" },
-//     maxQuantity: "unlimited",
-//     quantityLimitPerTransaction: "unlimited",
-//     waitInSeconds: { type: "BigNumber", hex: "0x00" },
-//     merkleRootHash:
-//       "0x0000000000000000000000000000000000000000000000000000000000000000",
-//     availableSupply: "unlimited",
-//     currentMintSupply: "0",
-//     currencyMetadata: {
-//       name: "USDT-by-munj1",
-//       symbol: "USDT",
-//       decimals: 18,
-//       value: { type: "BigNumber", hex: "0x056bc75e2d63100000" },
-//       displayValue: "100.0",
-//     },
-//   },
-// ];
+interface FetchedCondition {
+  startTime: string;
+  currencyAddress: string;
+  price: BigNumber;
+  maxQuantity: string | number | BigNumber;
+  quantityLimitPerTransaction: string | number | BigNumber;
+  waitInSeconds: BigNumber;
+  merkleRootHash: string;
+  availableSupply: string;
+  currentMintSupply: string;
+  currencyMetadata: {
+    name: string;
+    symbol: string;
+    decimals: number;
+    value: BigNumber;
+    displayValue: string;
+  };
+}
 
 interface Condition {
   currencyMetadata: {
@@ -150,10 +131,13 @@ type SaleStatus = "onSale" | "soldOut" | "commingSoon";
 
 export type {
   Sales,
+  SaleStatus,
   // Users,
   // Transactions,
   CoralyERC1155,
   CoralyERC721,
-  SaleStatus,
   Condition,
+  FetchedCoralyERC1155,
+  FetchedCoralyERC721,
+  FetchedCondition,
 };
