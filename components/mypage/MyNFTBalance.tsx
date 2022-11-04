@@ -82,7 +82,8 @@ const MyNFTBalance = () => {
     return () => {
       setOwnedNFTs(undefined);
     };
-  }, [address, fetchedShare, sdk, shareContract]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address, fetchedShare]);
 
   return (
     <VStack>
